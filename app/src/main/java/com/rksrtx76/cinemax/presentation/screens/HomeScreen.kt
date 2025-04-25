@@ -51,6 +51,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.screens.components.GenreSelectable
 import com.rksrtx76.cinemax.presentation.screens.components.ShouldShowMediaHomeScreenSectionOrShimmer
+import com.rksrtx76.cinemax.presentation.screens.components.TopAppBar
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants
@@ -99,83 +100,6 @@ fun HomeScreen(
     }
 }
 
-@Composable
-fun TopAppBar(
-    homeViewModel: HomeViewModel,
-    tabPage: MediaType,
-    onTabSelected : (MediaType) -> Unit,
-    modifier: Modifier = Modifier
-){
-        Column(
-            modifier = modifier
-//                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
-                .statusBarsPadding()
-//                .padding(vertical = 12.dp)
-        ){
-            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.cinemax),
-                    contentDescription = null,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-
-            val selectedMediaType by rememberUpdatedState(
-                homeViewModel.selectedMediaType.value
-            )
-
-            TabRow(
-                selectedTabIndex = tabPage.ordinal,
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                indicator = { tabPositions->
-                    // Todo
-                }
-            ) {
-                HomeTab(
-                    title = stringResource(R.string.movies),
-                    onClick = {
-                        onTabSelected(MediaType.MOVIE)
-                    }
-                )
-                HomeTab(
-                    title = stringResource(R.string.tv_series),
-                    onClick = {
-                        onTabSelected(MediaType.TVSHOW)
-                    }
-                )
-            }
-        }
-}
-
-@Composable
-fun HomeTab(
-    title : String,
-    onClick : ()->Unit,
-    modifier: Modifier = Modifier
-){
-    Row(
-        modifier = modifier
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-    }
-}
 
 
 @Composable
