@@ -11,22 +11,34 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -58,15 +70,27 @@ fun HomeScreen(
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
-
+    var tabPage by remember { mutableStateOf(MediaType.MOVIE) }
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(homeViewModel, modifier)
+            TopAppBar(
+                homeViewModel = homeViewModel,
+                tabPage = tabPage,
+                onTabSelected = { selectedTab->
+                    tabPage = selectedTab
+                    if(homeViewModel.selectedMediaType.value != selectedTab){
+                        homeViewModel.selectedMediaType.value = selectedTab
+                        homeViewModel.getMediaGenre()
+                        homeViewModel.refreshAll(null)
+                    }
+                },
+                modifier = modifier
+            )
         },
     ) { padding->
         HomeScreenContent(
-            modifier = Modifier.padding(top = 16.dp),  // this line
+            modifier = Modifier.padding(top = padding.calculateTopPadding()),  // this line
             navController = navController,
             bottomBarNavController = bottomBarNavController,
             homeViewModel = homeViewModel,
@@ -78,15 +102,19 @@ fun HomeScreen(
 @Composable
 fun TopAppBar(
     homeViewModel: HomeViewModel,
+    tabPage: MediaType,
+    onTabSelected : (MediaType) -> Unit,
     modifier: Modifier = Modifier
 ){
         Column(
             modifier = modifier
+//                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.background)
                 .statusBarsPadding()
 //                .padding(vertical = 12.dp)
         ){
+            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -101,62 +129,52 @@ fun TopAppBar(
                 )
             }
 
-//            Spacer(modifier = Modifier.height(12.dp))
-
-            val mediaTypes = listOf(MediaType.MOVIE, MediaType.TVSHOW)
             val selectedMediaType by rememberUpdatedState(
                 homeViewModel.selectedMediaType.value
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                mediaTypes.forEachIndexed{ idx, mediaType->
-                    Text(
-                        text = if(mediaType == MediaType.MOVIE) stringResource(R.string.movies) else stringResource(R.string.tv_series),
-//                        fontWeight = if(selectedMediaType == mediaTypes[idx]) FontWeight.Bold else FontWeight.Light,
-                        color = if(selectedMediaType == mediaTypes[idx]) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
-                            .padding(start = 4.dp, end = 4.dp, top = 4.dp)
-                            .clickable(
-                                interactionSource = remember {
-                                    MutableInteractionSource()
-                                },
-                                indication = null
-                            ){
-                                if(homeViewModel.selectedMediaType.value != mediaTypes[idx]){
-                                    homeViewModel.selectedMediaType.value = mediaTypes[idx]
-                                    homeViewModel.getMediaGenre()
-                                    homeViewModel.refreshAll(null)
-                                }
-                            }
-                            .padding(vertical = 8.dp, horizontal = 12.dp)
-                    )
+            TabRow(
+                selectedTabIndex = tabPage.ordinal,
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                indicator = { tabPositions->
+                    // Todo
                 }
-//                val offset = animateDpAsState(
-//                    targetValue = when(mediaTypes.indexOf(selectedMediaType)){
-//                        0 -> (-35).dp
-//                        else -> 30.dp
-//                    },
-//                    animationSpec = spring(
-//                        dampingRatio = Spring.DampingRatioMediumBouncy
-//                    )
-//                )
-//
-//                Box(
-//                    modifier = Modifier
-//                        .width(46.dp)
-//                        .height(2.dp)
-//                        .offset(x = offset.value)
-//                        .clip(RoundedCornerShape(4.dp))
-//                        .background(MaterialTheme.colorScheme.primaryContainer)
-//                )
+            ) {
+                HomeTab(
+                    title = stringResource(R.string.movies),
+                    onClick = {
+                        onTabSelected(MediaType.MOVIE)
+                    }
+                )
+                HomeTab(
+                    title = stringResource(R.string.tv_series),
+                    onClick = {
+                        onTabSelected(MediaType.TVSHOW)
+                    }
+                )
             }
         }
+}
+
+@Composable
+fun HomeTab(
+    title : String,
+    onClick : ()->Unit,
+    modifier: Modifier = Modifier
+){
+    Row(
+        modifier = modifier
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+    }
 }
 
 
@@ -205,16 +223,17 @@ fun HomeScreenContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
-                .padding(top = 26.dp),
+                .background(MaterialTheme.colorScheme.surface),
+//                .padding(top = 26.dp),
             state = listState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(vertical = 12.dp)
+//            contentPadding = PaddingValues(vertical = 12.dp)
         ) {
 
             item {
                 val genres = homeViewModel.mediaGenre
                 val selectedGenre = homeViewModel.selectedGenre
+                Spacer(modifier = Modifier.height(8.dp))
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth(),

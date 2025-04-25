@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -22,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun GenreSelectable(
@@ -38,14 +38,13 @@ fun GenreSelectable(
             easing = LinearOutSlowInEasing
         )
     )
-
     Box(
         modifier = Modifier
             .clip(CircleShape)
             .background(color = animateBackColor)
             .height(34.dp)
             .widthIn(min = 50.dp)
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 4.dp)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,7 +37,7 @@ fun MediaHomeScreenSection(
     navController: NavController,
     bottomNavController: NavHostController
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = Modifier.padding(bottom = 12.dp)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -47,7 +49,8 @@ fun MediaHomeScreenSection(
                 text = title,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = font,
-                fontSize = 20.sp
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
             )
             Text(
                 modifier = Modifier
@@ -58,7 +61,7 @@ fun MediaHomeScreenSection(
                 text = stringResource(R.string.see_all),
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 fontFamily = font,
-                fontSize = 16.sp
+                fontSize = 14.sp
             )
         }
 

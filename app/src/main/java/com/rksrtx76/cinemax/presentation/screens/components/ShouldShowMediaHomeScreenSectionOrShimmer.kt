@@ -55,10 +55,10 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
         // if list empty then show shimmer only (no data)
         ShowHomeShimmer(
             title = title,
-            modifier = Modifier
-                .height(220.dp)
-                .width(150.dp)
-                .padding(top = 20.dp, bottom = 12.dp)
+            modifier = modifier
+//                .height(195.dp)
+//                .width(125.dp)
+//                .padding(top = 20.dp, bottom = 12.dp)
         )
     }else{
         MediaHomeScreenSection(
