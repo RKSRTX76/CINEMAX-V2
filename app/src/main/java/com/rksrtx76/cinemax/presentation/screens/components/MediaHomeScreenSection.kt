@@ -44,7 +44,6 @@ fun MediaHomeScreenSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -53,21 +52,6 @@ fun MediaHomeScreenSection(
                 fontFamily = font,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
-            )
-            Text(
-                modifier = Modifier
-                    .alpha(0.7f)
-                    .clickable {
-//                        navigate to mediaListScreen (Note-> title is category for mediaListScreen)
-                        // route -> Movie/category(title for mediaListScreen)
-                        navController.navigate(
-                            "${Screen.MEDIA_LIST_SCREEN}/${type}/${title}"
-                        )
-                    },
-                text = stringResource(R.string.see_all),
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                fontFamily = font,
-                fontSize = 16.sp
             )
         }
 
@@ -78,7 +62,7 @@ fun MediaHomeScreenSection(
         ) {
             // media list is a StateFlow<Flow<PagingData<Media>>> so .size will not work
             // take only first 25 items
-            items(count = minOf(mediaItems.itemCount,25)){ idx->
+            items(count = minOf(mediaItems.itemCount,250)){ idx->
                 mediaItems[idx]?.let { media ->
                     Item(
                         media = media,

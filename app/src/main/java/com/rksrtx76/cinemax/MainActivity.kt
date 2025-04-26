@@ -69,32 +69,6 @@ fun Navigation(
             )
         }
 
-        composable(
-            route = "${Screen.MEDIA_LIST_SCREEN}/{type}/{title}",
-            arguments = listOf(
-                navArgument("type"){ type = NavType.StringType},
-                navArgument("title"){ type = NavType.StringType},
-            )
-        ){ navBackStackEntry ->
-            // extract data from route
-            val type = navBackStackEntry.arguments?.getString("type") ?: ""
-            val category = navBackStackEntry.arguments?.getString("title") ?: ""
-
-            val mediaItems  = when(type){
-                stringResource(R.string.trending) -> homeViewModel.trendingMedia.value.collectAsLazyPagingItems()
-                stringResource(R.string.popular) -> homeViewModel.popularMedia.value.collectAsLazyPagingItems()
-                stringResource(R.string.top_rated) -> homeViewModel.topRatedMedia.value.collectAsLazyPagingItems()
-                stringResource(R.string.now_playing) -> homeViewModel.nowPlayingMedia.value.collectAsLazyPagingItems()
-                else -> homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()   // upcoming movies
-            }
-            MediaListScreen(
-                type = type,
-                category = category,
-                mediaItems = mediaItems,
-                navController = navController,
-                navBackStackEntry = navBackStackEntry
-            )
-        }
     }
 }
 
