@@ -30,6 +30,7 @@ object Constants{
     const val searchScreen = "searchScreen"
     const val homeScreen = "searchScreen"
     const val bookmarkScreen = "bookmarkScreen"
+    const val mediaListScreen = "mediaListScreen"
 
     const val MOVIE_TAB = "Movies"
     const val TV_SHOW_TAB = "Series"

@@ -18,10 +18,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -62,6 +64,10 @@ fun Item(
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ){
         if(imageState is AsyncImagePainter.State.Success){
+            val imageBitmap = imageState.result.drawable.toBitmap()
+
+            dominantColor = getAverageColor(imageBitmap = imageBitmap.asImageBitmap())
+
             Image(
                 painter = imagePainter,
                 contentDescription = media.title,

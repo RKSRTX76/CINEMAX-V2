@@ -4,6 +4,7 @@ object Screen {
     const val SEARCH_SCREEN = "search_screen"
     const val MAIN_SCREEN = "main_screen"
     const val HOME_SCREEN = "home_screen"
+    const val MEDIA_LIST_SCREEN = "home_screen"
     const val TV_SHOWS_SCREEN = "tv_shows_screen"
     const val SIMILAR_MEDIA_SCREEN = "similar_media_screen"
     const val DETAILS_SCREEN = "details_screen"

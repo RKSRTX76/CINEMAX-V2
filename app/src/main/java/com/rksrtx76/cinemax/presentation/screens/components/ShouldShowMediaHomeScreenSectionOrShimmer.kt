@@ -24,32 +24,7 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
     navController: NavController,
     navHostController: NavHostController
 ) {
-    val title = when(type){
-        Constants.trendingAllListScreen ->{
-            stringResource(R.string.trending)
-        }
-        Constants.popularScreen ->{
-            stringResource(R.string.popular)
-        }
-        Constants.topRatedAllListScreen ->{
-            stringResource(R.string.top_rated)
-        }
-        Constants.NOW_PLAYING ->{
-            stringResource(R.string.now_playing)
-        }
-        Constants.upcomingMoviesScreen ->{
-            stringResource(R.string.upcoming_movies)
-        }
-        Constants.airingTodayTvSeriesScreen ->{
-            stringResource(R.string.airing_today)
-        }
-        Constants.recommendedListScreen ->{
-            stringResource(R.string.recommended)
-        }
-        else -> {
-            ""
-        }
-    }
+    val title = getTitle(type)
 
     if(showShimmer){
         // if list empty then show shimmer only (no data)

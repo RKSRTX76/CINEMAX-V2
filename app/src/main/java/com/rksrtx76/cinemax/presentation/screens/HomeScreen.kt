@@ -61,7 +61,7 @@ fun HomeScreen(
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var tabPage by remember { mutableStateOf(MediaType.MOVIE) }
 
     Scaffold(
@@ -81,7 +81,11 @@ fun HomeScreen(
                             contentDescription = null,
                             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
                         )
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background, // or whatever fixed color you want
+                        scrolledContainerColor = MaterialTheme.colorScheme.background // fix scrolled color too
+                    )
                 )
                 TabScreen(
                     homeViewModel = homeViewModel,
@@ -162,25 +166,10 @@ fun HomeScreenContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
                     .background(MaterialTheme.colorScheme.surface),
-//                .padding(top = 26.dp),
                 state = listState,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-//            contentPadding = PaddingValues(vertical = 12.dp)
             ) {
-//                item {
-//                    TabScreen(
-//                        homeViewModel = homeViewModel,
-//                        tabPage = tabPage,
-//                        onTabSelected = { selectedTab->
-//                            tabPage = selectedTab
-//                            if(homeViewModel.selectedMediaType.value != selectedTab){
-//                                homeViewModel.selectedMediaType.value = selectedTab
-//                                homeViewModel.getMediaGenre()
-//                                homeViewModel.refreshAll(null)
-//                            }
-//                        },
-//                    )
-//                }
+
 
                 item {
                     val genres = homeViewModel.mediaGenre

@@ -7,6 +7,7 @@ import com.rksrtx76.cinemax.data.remote.dto.GenreResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.MediaResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.MultiSearchResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.ReviewResponseDto
+import com.rksrtx76.cinemax.data.remote.dto.VideosDto
 import com.rksrtx76.cinemax.util.Constants.api_key
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -158,5 +159,15 @@ interface MediaApiService {
         @Query("api_key") apiKey : String = api_key,
         @Query("language") language: String = "en"
     ) : ReviewResponseDto
+
+    /** Videos **/
+    @GET("{type}/{id}/videos")
+    suspend fun getVideosList(
+        @Path("type") type: String, // "movie" or "tv"
+        @Path("id") mediaId: Int,
+        @Query("page") page: Int = 0,
+        @Query("api_key") apiKey: String = api_key,
+        @Query("language") language: String = "en"
+    ): VideosDto?
 }
 

@@ -27,6 +27,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.ui.theme.font
+import com.rksrtx76.cinemax.util.Screen
 
 @Composable
 fun MediaHomeScreenSection(
@@ -56,7 +57,11 @@ fun MediaHomeScreenSection(
                 modifier = Modifier
                     .alpha(0.7f)
                     .clickable {
-                        // Todo
+//                        navigate to mediaListScreen (Note-> title is category for mediaListScreen)
+                        // route -> Movie/category(title for mediaListScreen)
+                        navController.navigate(
+                            "${Screen.MEDIA_LIST_SCREEN}/${type}/${title}"
+                        )
                     },
                 text = stringResource(R.string.see_all),
                 color = MaterialTheme.colorScheme.onSecondaryContainer,

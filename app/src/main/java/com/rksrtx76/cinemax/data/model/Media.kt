@@ -3,6 +3,7 @@ package com.rksrtx76.CINEMAX.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.rksrtx76.cinemax.data.model.Video
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -37,6 +38,8 @@ data class Media(
     val title: String,
     @SerializedName("video")
     val video: Boolean,
+    @SerializedName("videos")
+    val videoIds: List<Video>?,
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
