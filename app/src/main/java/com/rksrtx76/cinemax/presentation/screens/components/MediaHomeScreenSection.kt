@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,7 +67,7 @@ fun MediaHomeScreenSection(
                 text = stringResource(R.string.see_all),
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 fontFamily = font,
-                fontSize = 14.sp
+                fontSize = 16.sp
             )
         }
 

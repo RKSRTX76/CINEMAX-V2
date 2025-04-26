@@ -99,27 +99,37 @@ fun MediaItem(
         }
 
         // Rating badge
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(8.dp))
-                .padding(horizontal = 6.dp, vertical = 4.dp)
-                .padding(end = 6.dp, bottom = 6.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Rating",
-                tint = Color.Yellow,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = media.voteAverage.toString().take(3),
-                fontFamily = font,
-                fontSize = 14.sp,
-                color = Color.White,
-                modifier = Modifier.padding(start = 4.dp)
-            )
+        val vote = media.voteAverage.toString()
+        val firstDigit = vote.first().digitToIntOrNull() ?: 0
+
+        val starColor = when(firstDigit){
+            in 0..4 -> Color(0xFFA52A2A)
+            in 5..7 -> Color(0xFF4CAF50)
+            else -> Color(0xFFFFEB3B)
+        }
+        if(!vote.startsWith("0")){
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
+                    .padding(horizontal = 2.dp)
+                    .padding(end = 6.dp, bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Rating",
+                    tint = starColor,
+                    modifier = Modifier.size(14.dp)
+                )
+                Text(
+                    text = vote.take(3),
+                    fontFamily = font,
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
         }
     }
 }
