@@ -104,15 +104,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-//    fun updateSelectedGenre(genre: Genre) {
-//        _selectedGenre.value = genre
-//    }
-//    fun updateSelectedMediaType(selectedMediaType: MediaType){
-//        _selectedMediaType.value = selectedMediaType
-//    }
 
+//    cachedIn(viewModelScope) expects to be used at the time of collection, not necessarily inside a coroutine.
+//    Since cachedIn(...) creates a new Flow, you can directly assign it without launching a coroutine.
     private fun getTrendingMedia(genreId: Int?, mediaType: MediaType){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _trendingMedia.value = if(genreId != null){
                 mediaRepository.getTrendingMedia(mediaType).map { results->
                     results.filter { movie->
@@ -122,11 +118,11 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getTrendingMedia(mediaType).cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 
     private fun getPopularMedia(genreId: Int?, mediaType: MediaType){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _popularMedia.value = if(genreId != null){
                 mediaRepository.getPopularMedia(mediaType).map { results->
                     results.filter { movie->
@@ -136,11 +132,11 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getPopularMedia(mediaType).cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 
     private fun getTopRatedMedia(genreId: Int?, mediaType: MediaType){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _topRatedMedia.value = if(genreId != null){
                 mediaRepository.getTopRatedMedia(mediaType).map { results->
                     results.filter { movie->
@@ -150,11 +146,11 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getTopRatedMedia(mediaType).cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 
     private fun getNowPlayingMedia(genreId: Int?, mediaType: MediaType){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _nowPlayingMedia.value = if(genreId != null){
                 mediaRepository.getNowPlayingMedia(mediaType).map { results->
                     results.filter { movie->
@@ -164,11 +160,11 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getNowPlayingMedia(mediaType).cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 
     fun getRecommendedMedia(mediaId : Int, genreId: Int? = null, mediaType: MediaType = selectedMediaType.value){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _recommendedMedia.value = if(genreId != null){
                 mediaRepository.getRecommendedMedia(mediaId,mediaType).map { results->
                     results.filter { movie->
@@ -178,11 +174,11 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getRecommendedMedia(mediaId,mediaType).cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 
     private fun getUpcomingMovies(genreId: Int?){
-        viewModelScope.launch {
+//        viewModelScope.launch {
             _upcomingMovies.value = if(genreId != null){
                 mediaRepository.getUpcomingMovies().map { results->
                     results.filter { movie->
@@ -192,6 +188,6 @@ class HomeViewModel @Inject constructor(
             }else{
                 mediaRepository.getUpcomingMovies().cachedIn(viewModelScope)
             }
-        }
+//        }
     }
 }

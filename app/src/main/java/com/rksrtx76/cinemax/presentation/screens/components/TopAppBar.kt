@@ -8,14 +8,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
@@ -30,16 +35,15 @@ import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.font
 import com.rksrtx76.cinemax.util.MediaType
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
-    homeViewModel: HomeViewModel,
-    tabPage: MediaType,
-    onTabSelected : (MediaType) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior
 ){
     Column(
         modifier = modifier
-//                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
@@ -59,55 +63,5 @@ fun TopAppBar(
                 modifier = Modifier.padding(start = 8.dp)
             )
         }
-
-        val selectedMediaType by rememberUpdatedState(
-            homeViewModel.selectedMediaType.value
-        )
-
-        TabRow(
-            selectedTabIndex = tabPage.ordinal,
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            indicator = { tabPositions->
-            }
-        ) {
-            HomeTab(
-                title = stringResource(R.string.movies),
-                fontWeight = if(selectedMediaType == MediaType.MOVIE) FontWeight.Bold else FontWeight.Normal,
-                onClick = {
-                    onTabSelected(MediaType.MOVIE)
-                }
-            )
-            HomeTab(
-                title = stringResource(R.string.tv_series),
-                fontWeight = if(selectedMediaType == MediaType.TVSHOW) FontWeight.Bold else FontWeight.Normal,
-                onClick = {
-                    onTabSelected(MediaType.TVSHOW)
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun HomeTab(
-    title : String,
-    fontWeight: FontWeight,
-    onClick : ()->Unit,
-    modifier: Modifier = Modifier
-){
-    Row(
-        modifier = modifier
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            fontWeight = fontWeight,
-            fontFamily = font,
-            color = MaterialTheme.colorScheme.onBackground
-        )
     }
 }
