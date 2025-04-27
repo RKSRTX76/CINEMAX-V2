@@ -66,6 +66,7 @@ import com.rksrtx76.cinemax.util.Screen
 @Composable
 fun HomeScreen(
     modifier : Modifier = Modifier,
+    paddingValues : PaddingValues,
     bottomBarNavController : NavHostController,
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
@@ -73,62 +74,57 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var tabPage by remember { mutableStateOf(MediaType.MOVIE) }
 
-    Scaffold(
+    // Default TopAppBar with title
+    Column(
         modifier = modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            // Default TopAppBar with title
-            Column {
-                TopAppBar(
-                    title = {},
-                    scrollBehavior = scrollBehavior,
-                    navigationIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.cinemax),
-                            tint = Color.Unspecified,
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.background, // or whatever fixed color you want
-                        scrolledContainerColor = MaterialTheme.colorScheme.background // fix scrolled color too
-                    )
+    ) {
+        TopAppBar(
+            title = {},
+            scrollBehavior = scrollBehavior,
+            navigationIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.cinemax),
+                    tint = Color.Unspecified,
+                    contentDescription = null,
+                    modifier = Modifier.padding(start = 8.dp, top = 8.dp)
                 )
-                TabScreen(
-                    homeViewModel = homeViewModel,
-                    tabPage = tabPage,
-                    onTabSelected = { selectedTab->
-                        tabPage = selectedTab
-                        if(homeViewModel.selectedMediaType.value != selectedTab){
-                            homeViewModel.selectedMediaType.value = selectedTab
-                            homeViewModel.getMediaGenre()
-                            homeViewModel.refreshAll(null)
-                        }
-                    },
-                )
-            }
-        },
-    ) { padding->
-
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = Screen.MAIN_SCREEN
-        ){
-            composable(Screen.MAIN_SCREEN){
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background, // or whatever fixed color you want
+                scrolledContainerColor = MaterialTheme.colorScheme.background // fix scrolled color too
+            )
+        )
+        TabScreen(
+            homeViewModel = homeViewModel,
+            tabPage = tabPage,
+            onTabSelected = { selectedTab->
+                tabPage = selectedTab
+                if(homeViewModel.selectedMediaType.value != selectedTab){
+                    homeViewModel.selectedMediaType.value = selectedTab
+                    homeViewModel.getMediaGenre()
+                    homeViewModel.refreshAll(null)
+                }
+            },
+        )
+//        val navController = rememberNavController()
+//        NavHost(
+//            navController = navController,
+//            startDestination = Screen.MAIN_SCREEN
+//        ){
+//            composable(Screen.MAIN_SCREEN){
                 HomeScreenContent(
-                    modifier = modifier.padding(padding),  // this line
-                    navController = navController,
+                    modifier = Modifier,  // this line
+                    paddingValues = paddingValues,
                     bottomBarNavController = bottomBarNavController,
                     scrollBehavior = scrollBehavior,
                     homeViewModel = homeViewModel,
                     bookMarkViewModel = bookMarkViewModel
                 )
-            }
-        }
+//            }
+//        }
     }
 }
 
@@ -138,12 +134,16 @@ fun HomeScreen(
 @Composable
 fun HomeScreenContent(
     modifier : Modifier = Modifier,
-    navController: NavController,
+//    navController: NavController,
+    paddingValues: PaddingValues,
     bottomBarNavController : NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
+
+    val navController = rememberNavController()
+
     val context = LocalContext.current
     BackHandler(enabled = true) {
         (context as Activity).finish()
@@ -178,7 +178,7 @@ fun HomeScreenContent(
         }
     }
         Box(
-            modifier = modifier
+            modifier = modifier.padding(bottom = paddingValues.calculateBottomPadding(), top = 8.dp)
         ){
             LazyColumn(
                 modifier = Modifier
@@ -188,12 +188,9 @@ fun HomeScreenContent(
                 state = listState,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-
-
                 item {
                     val genres = homeViewModel.mediaGenre
                     val selectedGenre = homeViewModel.selectedGenre
-                    Spacer(modifier = Modifier.height(8.dp))
                     LazyRow(
                         modifier = Modifier
                             .fillMaxWidth(),

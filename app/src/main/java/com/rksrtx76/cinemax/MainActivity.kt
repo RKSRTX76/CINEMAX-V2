@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { paddingValues ->
-                    Navigation(bottomNavController = bottomNavController)
+                    Navigation(bottomNavController = bottomNavController, paddingValues = paddingValues)
                 }
             }
         }
