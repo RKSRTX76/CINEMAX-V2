@@ -40,9 +40,9 @@ fun GenreSelectable(
     val animateBackColor by animateColorAsState(
         targetValue =
             if(isDarkTheme){
-                if(selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.secondary
+                if(selected) Color(0xFF5E5E5E) else Color.White
             }else{
-                if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
+                if(selected) Color.Black else Color.Black.copy(alpha = 0.10f)
             }
         ,
         animationSpec = tween(
@@ -70,10 +70,10 @@ fun GenreSelectable(
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
             color = if(isDarkTheme){
-                if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.80f)
+                if(selected) Color.White.copy(alpha = 0.80f) else Color.Black
             }
             else{
-                if(selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                if(selected) Color.White else Color.Black
             }
         )
     }

@@ -37,6 +37,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.screens.components.GenreSelectable
@@ -51,12 +54,12 @@ import com.rksrtx76.cinemax.util.Constants.topRatedAllListScreen
 import com.rksrtx76.cinemax.util.Constants.trendingAllListScreen
 import com.rksrtx76.cinemax.util.Constants.upcomingMoviesScreen
 import com.rksrtx76.cinemax.util.MediaType
+import com.rksrtx76.cinemax.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier : Modifier = Modifier,
-    navController: NavController,
     bottomBarNavController : NavHostController,
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
@@ -102,14 +105,23 @@ fun HomeScreen(
             }
         },
     ) { padding->
-        HomeScreenContent(
-            modifier = Modifier.padding(top = padding.calculateTopPadding()),  // this line
+
+        val navController = rememberNavController()
+        NavHost(
             navController = navController,
-            bottomBarNavController = bottomBarNavController,
-            scrollBehavior = scrollBehavior,
-            homeViewModel = homeViewModel,
-            bookMarkViewModel = bookMarkViewModel
-        )
+            startDestination = Screen.MAIN_SCREEN
+        ){
+            composable(Screen.MAIN_SCREEN){
+                HomeScreenContent(
+                    modifier = Modifier.padding(top = padding.calculateTopPadding()),  // this line
+                    navController = navController,
+                    bottomBarNavController = bottomBarNavController,
+                    scrollBehavior = scrollBehavior,
+                    homeViewModel = homeViewModel,
+                    bookMarkViewModel = bookMarkViewModel
+                )
+            }
+        }
     }
 }
 
