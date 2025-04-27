@@ -1,4 +1,4 @@
-package com.rksrtx76.cinemax.presentation
+package com.rksrtx76.cinemax.presentation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -6,7 +6,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.rksrtx76.cinemax.presentation.screens.HomeScreen
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.BottomNav
@@ -21,9 +20,9 @@ fun Navigation(
     val bookmarkViewModel = hiltViewModel<BookMarkViewModel>()
     NavHost(
         navController = bottomNavController,
-        startDestination = BottomNav.MEDIA_HOME_SCREEN
+        startDestination = BottomNav.MEDIA_MAIN_SCREEN
     ){
-        composable(BottomNav.MEDIA_HOME_SCREEN){
+        composable(BottomNav.MEDIA_MAIN_SCREEN){
             HomeScreen(
                 bottomBarNavController = bottomNavController,
                 homeViewModel = homeViewModel,
