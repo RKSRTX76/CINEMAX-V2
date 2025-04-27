@@ -8,13 +8,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -70,6 +76,7 @@ fun HomeScreen(
     Scaffold(
         modifier = modifier
             .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             // Default TopAppBar with title
@@ -113,7 +120,7 @@ fun HomeScreen(
         ){
             composable(Screen.MAIN_SCREEN){
                 HomeScreenContent(
-                    modifier = Modifier.padding(top = padding.calculateTopPadding()),  // this line
+                    modifier = modifier.padding(padding),  // this line
                     navController = navController,
                     bottomBarNavController = bottomBarNavController,
                     scrollBehavior = scrollBehavior,
