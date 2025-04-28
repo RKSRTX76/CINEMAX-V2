@@ -62,8 +62,9 @@ import com.rksrtx76.cinemax.ui.theme.font
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    searchViewModel: SearchViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel,
+    searchViewModel: SearchViewModel,
+    paddingValues: PaddingValues,
     navController: NavController
 ) {
     val searchQuery by searchViewModel.searchQuery.collectAsState()
@@ -78,7 +79,6 @@ fun SearchScreen(
             .fillMaxSize()
             .statusBarsPadding()
             .background(MaterialTheme.colorScheme.surface)
-
     ) {
         FocusedSearchBar(
             searchQuery = searchQuery,
@@ -92,7 +92,8 @@ fun SearchScreen(
                     LazyVerticalGrid(
                         state = listState,
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .padding(bottom = paddingValues.calculateBottomPadding()),
                         contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                         horizontalArrangement = Arrangement.spacedBy(6.dp),

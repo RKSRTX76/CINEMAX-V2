@@ -77,7 +77,7 @@ fun FocusedSearchBar(
                 Icon(
                     imageVector = Icons.Rounded.Search,
                     contentDescription = null,
-                    tint = if(isDarkTheme) Color(0xFF5E5E5E) else Color.Black.copy(alpha = 0.10f),
+                    tint = if(isDarkTheme) MaterialTheme.colorScheme.onBackground else Color.Black.copy(alpha = 0.10f),
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             },
@@ -122,7 +122,7 @@ fun SearchBar(
         textStyle = TextStyle(
             color = MaterialTheme.colorScheme.onBackground,
             fontFamily = font,
-            fontSize = 14.sp
+            fontSize = 16.sp
         ),
         modifier = modifier
             .clip(RoundedCornerShape(percent = 45))

@@ -36,6 +36,9 @@ fun Navigation(
         composable(BottomNav.SEARCH_SCREEN){
             SearchScreen(
                 navController = bottomNavController,
+                searchViewModel = searchViewModel,
+                homeViewModel = homeViewModel,
+                paddingValues = paddingValues
             )
         }
         composable(BottomNav.BOOKMARK_SCREEN){
