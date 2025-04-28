@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /** This is similar to Film only that everything is nullable.*/
 data class Search(
     @SerializedName("adult")
-    val adult: Boolean?,
+    val adult: Boolean? = true,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("genre_ids")

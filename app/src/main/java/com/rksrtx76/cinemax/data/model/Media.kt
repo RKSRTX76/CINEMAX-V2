@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Media(
     @SerializedName("adult")
-    val adult: Boolean,
+    val adult: Boolean = true,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("poster_path")

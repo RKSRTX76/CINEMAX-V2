@@ -3,11 +3,13 @@ package com.rksrtx76.cinemax.di
 import com.rksrtx76.cinemax.data.repository.BookMarkListRepositoryImpl
 import com.rksrtx76.cinemax.data.repository.GenreRepositoryImpl
 import com.rksrtx76.cinemax.data.repository.MediaRepositoryImpl
+import com.rksrtx76.cinemax.data.repository.PreferenceRepositoryImpl
 import com.rksrtx76.cinemax.data.repository.ReviewRepositoryImpl
 import com.rksrtx76.cinemax.data.repository.SearchRepositoryImpl
 import com.rksrtx76.cinemax.domain.repository.BookMarkListRepository
 import com.rksrtx76.cinemax.domain.repository.GenreRepository
 import com.rksrtx76.cinemax.domain.repository.MediaRepository
+import com.rksrtx76.cinemax.domain.repository.PreferenceRepository
 import com.rksrtx76.cinemax.domain.repository.ReviewRepository
 import com.rksrtx76.cinemax.domain.repository.SearchRepository
 import dagger.Binds
@@ -48,4 +50,10 @@ abstract class RepositoryModule {
     abstract fun bindReviewsRepository(
         reviewRepositoryImpl: ReviewRepositoryImpl
     ) : ReviewRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPreferenceRepository(
+        preferenceRepositoryImpl: PreferenceRepositoryImpl
+    ) : PreferenceRepository
 }

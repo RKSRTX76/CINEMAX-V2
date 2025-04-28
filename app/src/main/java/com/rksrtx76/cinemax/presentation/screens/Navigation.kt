@@ -6,8 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.rksrtx76.cinemax.presentation.screens.components.SearchScreen
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.SearchViewModel
 import com.rksrtx76.cinemax.util.BottomNav
 
 
@@ -17,6 +19,7 @@ fun Navigation(
     paddingValues: PaddingValues
 ){
     val homeViewModel = hiltViewModel<HomeViewModel>()
+    val searchViewModel = hiltViewModel<SearchViewModel>()
     val bookmarkViewModel = hiltViewModel<BookMarkViewModel>()
     NavHost(
         navController = bottomNavController,
@@ -31,7 +34,9 @@ fun Navigation(
             )
         }
         composable(BottomNav.SEARCH_SCREEN){
-//            SearchScreen()
+            SearchScreen(
+                navController = bottomNavController,
+            )
         }
         composable(BottomNav.BOOKMARK_SCREEN){
 //            BookMarkScreen()

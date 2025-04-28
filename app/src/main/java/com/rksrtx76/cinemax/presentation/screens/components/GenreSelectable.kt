@@ -40,7 +40,7 @@ fun GenreSelectable(
     val animateBackColor by animateColorAsState(
         targetValue =
             if(isDarkTheme){
-                if(selected) Color(0xFF5E5E5E) else Color.White
+                if(selected) Color.White else Color(0xFF5E5E5E)
             }else{
                 if(selected) Color.Black else Color.Black.copy(alpha = 0.10f)
             }
@@ -70,7 +70,7 @@ fun GenreSelectable(
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
             color = if(isDarkTheme){
-                if(selected) Color.White.copy(alpha = 0.80f) else Color.Black
+                if(selected) Color.Black else Color.White.copy(alpha = 0.80f)
             }
             else{
                 if(selected) Color.White else Color.Black
