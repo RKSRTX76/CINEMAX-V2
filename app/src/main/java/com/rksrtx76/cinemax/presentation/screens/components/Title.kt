@@ -7,25 +7,25 @@ import com.rksrtx76.cinemax.util.Constants
 
 @Composable
 fun getTitle(type : String) : String = when(type){
-        Constants.trendingAllListScreen ->{
+        Constants.TRENDING ->{
             stringResource(R.string.trending)
         }
-        Constants.popularScreen ->{
+        Constants.POPULAR ->{
             stringResource(R.string.popular)
         }
-        Constants.topRatedAllListScreen ->{
+        Constants.TOP_RATED ->{
             stringResource(R.string.top_rated)
         }
         Constants.NOW_PLAYING ->{
             stringResource(R.string.now_playing)
         }
-        Constants.upcomingMoviesScreen ->{
+        Constants.UPCOMING ->{
             stringResource(R.string.upcoming_movies)
         }
-        Constants.airingTodayTvSeriesScreen ->{
+        Constants.AIRING ->{
             stringResource(R.string.airing_today)
         }
-        Constants.recommendedListScreen ->{
+        Constants.RECOMMENDED ->{
             stringResource(R.string.recommended)
         }
         else -> {

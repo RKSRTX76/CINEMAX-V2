@@ -46,7 +46,9 @@ object AppModule {
             application,
             BookMarkDataBase::class.java,
             "bookmark_database.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Singleton

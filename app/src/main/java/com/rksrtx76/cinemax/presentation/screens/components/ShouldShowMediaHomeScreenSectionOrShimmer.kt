@@ -21,6 +21,7 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
     showShimmer :Boolean,
     pagingItems : LazyPagingItems<Media>,
     modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel,
     navController: NavController,
     navHostController: NavHostController
 ) {
@@ -41,6 +42,7 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
             type = type,
             mediaItems = pagingItems,
             modifier = modifier,
+            homeViewModel = homeViewModel,
             navController = navController,
             bottomNavController = navHostController
         )

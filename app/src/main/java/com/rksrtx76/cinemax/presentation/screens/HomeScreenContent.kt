@@ -30,12 +30,13 @@ import com.rksrtx76.cinemax.presentation.screens.components.ShouldShowMediaHomeS
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants.NOW_PLAYING
-import com.rksrtx76.cinemax.util.Constants.popularScreen
-import com.rksrtx76.cinemax.util.Constants.recommendedListScreen
-import com.rksrtx76.cinemax.util.Constants.topRatedAllListScreen
-import com.rksrtx76.cinemax.util.Constants.trendingAllListScreen
-import com.rksrtx76.cinemax.util.Constants.upcomingMoviesScreen
+import com.rksrtx76.cinemax.util.Constants.POPULAR
+import com.rksrtx76.cinemax.util.Constants.RECOMMENDED
+import com.rksrtx76.cinemax.util.Constants.TOP_RATED
+import com.rksrtx76.cinemax.util.Constants.TRENDING
+import com.rksrtx76.cinemax.util.Constants.UPCOMING
 import com.rksrtx76.cinemax.util.MediaType
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,6 +51,9 @@ fun HomeScreenContent(
 ){
 
     val navController = rememberNavController()
+    val selectedMediaType = homeViewModel.selectedMediaType.value
+
+    Timber.d("HomeScreenContent: $selectedMediaType") // receiving correct data
 
     val context = LocalContext.current
     BackHandler(enabled = true) {
@@ -62,7 +66,6 @@ fun HomeScreenContent(
     val nowPlayingMedia = homeViewModel.nowPlayingMedia.value.collectAsLazyPagingItems()
     val upcomingMovie = homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()
     val recommendedMedia = homeViewModel.recommendedMedia.value.collectAsLazyPagingItems()
-    val selectedMediaType = homeViewModel.selectedMediaType.value
     val bookmarkMedia = bookMarkViewModel.bookMarkList.value.collectAsState(initial = emptyList())
 
 
@@ -122,10 +125,11 @@ fun HomeScreenContent(
 
             item{
                 ShouldShowMediaHomeScreenSectionOrShimmer(
-                    type = trendingAllListScreen,
+                    type = TRENDING,
                     showShimmer = trendingMedia.itemCount == 0,
                     pagingItems = trendingMedia,
                     modifier = modifier,
+                    homeViewModel = homeViewModel,
                     navController = navController,
                     navHostController = bottomBarNavController,
                 )
@@ -133,20 +137,22 @@ fun HomeScreenContent(
 
             item{
                 ShouldShowMediaHomeScreenSectionOrShimmer(
-                    type = popularScreen,
+                    type = POPULAR,
                     showShimmer = popularMedia.itemCount == 0,
                     pagingItems = popularMedia,
                     modifier = modifier,
+                    homeViewModel = homeViewModel,
                     navController = navController,
                     navHostController = bottomBarNavController,
                 )
             }
             item{
                 ShouldShowMediaHomeScreenSectionOrShimmer(
-                    type = topRatedAllListScreen,
+                    type = TOP_RATED,
                     showShimmer = topRatedMedia.itemCount == 0,
                     pagingItems = topRatedMedia,
                     modifier = modifier,
+                    homeViewModel = homeViewModel,
                     navController = navController,
                     navHostController = bottomBarNavController,
                 )
@@ -157,6 +163,7 @@ fun HomeScreenContent(
                     showShimmer = nowPlayingMedia.itemCount == 0,
                     pagingItems = nowPlayingMedia,
                     modifier = modifier,
+                    homeViewModel = homeViewModel,
                     navController = navController,
                     navHostController = bottomBarNavController,
                 )
@@ -165,10 +172,11 @@ fun HomeScreenContent(
             if(selectedMediaType == MediaType.MOVIE){
                 item{
                     ShouldShowMediaHomeScreenSectionOrShimmer(
-                        type = upcomingMoviesScreen,
+                        type = UPCOMING,
                         showShimmer = upcomingMovie.itemCount == 0,
                         pagingItems = upcomingMovie,
                         modifier = modifier,
+                        homeViewModel = homeViewModel,
                         navController = navController,
                         navHostController = bottomBarNavController,
                     )
@@ -178,10 +186,11 @@ fun HomeScreenContent(
             if(recommendedMedia.itemCount != 0){
                 item{
                     ShouldShowMediaHomeScreenSectionOrShimmer(
-                        type = recommendedListScreen,
+                        type = RECOMMENDED,
                         showShimmer = recommendedMedia.itemCount == 0,
                         pagingItems = recommendedMedia,
                         modifier = modifier,
+                        homeViewModel = homeViewModel,
                         navController = navController,
                         navHostController = bottomBarNavController,
                     )

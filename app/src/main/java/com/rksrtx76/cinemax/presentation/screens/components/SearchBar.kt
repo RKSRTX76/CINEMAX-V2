@@ -85,6 +85,7 @@ fun FocusedSearchBar(
             onValueChange = { newQuery ->
                 searchViewModel.onSearchQueryChanged(newQuery)
             },
+            searchViewModel = searchViewModel,
             isDarkTheme = isDarkTheme,
             modifier = Modifier
                 .padding(horizontal = 8.dp)
@@ -100,6 +101,7 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     isDarkTheme : Boolean,
     searchQuery : String,
+    searchViewModel: SearchViewModel,
     leadingIcon: (@Composable () -> Unit)? = null,
     placeholderText : String,
     onValueChange : (String) -> Unit,
@@ -156,24 +158,21 @@ fun SearchBar(
                     }
                     innerTextField()
                 }
-//                if(searchQuery.isNotEmpty()){
-//                    Icon(
-//                        imageVector = Icons.Rounded.Close,
-//                        contentDescription = null,
-//                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
-//                        modifier = Modifier
-//                            .padding(horizontal = 8.dp)
-//                            .size(28.dp)
-//                            .clickable {
-//                                text = ""
-//                                onSearch("")
-//                            }
-//                    )
-//                }
+                if(searchQuery.isNotEmpty()){
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .size(28.dp)
+                            .clickable {
+                                searchViewModel.onSearchQueryChanged("")
+                            }
+                    )
+                }
             }
         }
     )
-
-
 }
 

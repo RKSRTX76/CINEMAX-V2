@@ -60,9 +60,9 @@ fun MediaItem(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .clickable {
-                navController.navigate(
-                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=${media.mediaType}&category=$category"
-                )
+//                navController.navigate(
+//                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=${media.mediaType}&category=$category"
+//                )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .fillMaxWidth()

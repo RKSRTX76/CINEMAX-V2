@@ -1,4 +1,4 @@
-package com.rksrtx76.cinemax.presentation.screens.components
+package com.rksrtx76.cinemax.presentation.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

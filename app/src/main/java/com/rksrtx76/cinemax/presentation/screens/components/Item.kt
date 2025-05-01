@@ -33,6 +33,9 @@ import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.ui.theme.Radius
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
+import com.rksrtx76.cinemax.util.Screen
+import timber.log.Timber
+import kotlin.text.category
 
 @Composable
 fun Item(
@@ -55,11 +58,14 @@ fun Item(
         mutableStateOf(defaultDominator)
     }
 
+
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(Radius.dp))
             .clickable {
-                // Todo
+                navController.navigate(
+                    "${Screen.DETAILS_SCREEN}?id=${media.id}"
+                )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ){

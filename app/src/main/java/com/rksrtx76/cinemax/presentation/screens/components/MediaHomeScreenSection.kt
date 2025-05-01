@@ -27,8 +27,11 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.font
+import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Screen
+import timber.log.Timber
 
 @Composable
 fun MediaHomeScreenSection(
@@ -37,8 +40,15 @@ fun MediaHomeScreenSection(
     mediaItems: LazyPagingItems<Media>,
     modifier : Modifier = Modifier,
     navController: NavController,
+    homeViewModel: HomeViewModel,
     bottomNavController: NavHostController
 ) {
+
+    val currMediaType = homeViewModel.selectedMediaType.value
+    val mediaType = if(currMediaType.ordinal == MediaType.MOVIE.ordinal) "movie" else "tv"
+
+    Timber.d("MediaHomeScreenSection: $mediaType")
+
     Column(modifier = Modifier.padding(bottom = 12.dp)) {
         Row(
             modifier = Modifier
@@ -66,6 +76,7 @@ fun MediaHomeScreenSection(
                 mediaItems[idx]?.let { media ->
                     Item(
                         media = media,
+//                        type = mediaType,
                         navController = navController,
                         modifier = Modifier
                             .height(195.dp)
