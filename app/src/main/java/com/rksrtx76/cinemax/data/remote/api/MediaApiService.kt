@@ -169,13 +169,13 @@ interface MediaApiService {
         @Path("id") mediaId: Int,
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
-    ): VideosDto?
+    ): VideosDto
 
     @GET("tv/{id}/videos")
     suspend fun getTvVideosList(
         @Path("id") mediaId: Int,
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
-    ): VideosDto?
+    ): VideosDto
 }
 

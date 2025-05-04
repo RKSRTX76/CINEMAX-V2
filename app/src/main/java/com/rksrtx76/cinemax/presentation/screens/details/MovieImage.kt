@@ -60,7 +60,7 @@ fun MovieImage(
         }
     }
 
-    if(imageState is AsyncImagePainter.State.Loading){
+    if(imageState is AsyncImagePainter.State.Loading || imageState is AsyncImagePainter.State.Empty){
         Box(
             modifier = Modifier
                 .fillMaxWidth()

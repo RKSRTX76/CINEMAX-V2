@@ -7,5 +7,5 @@ data class VideosDto(
     @SerializedName("id")
     val id : Int,
     @SerializedName("results")
-    val results : List<Video>? = null
+    val results : List<Video> = emptyList()
 )

@@ -28,7 +28,7 @@ data class MediaDetails(
     val popularity: Double? = null,
     @SerializedName("poster_path")
     val poster_path: String? = null,
-    @SerializedName("release_date")
+    @SerializedName("release_date", alternate = ["first_air_date"])
     val release_date: String? = null,
     @SerializedName("revenue")
     val revenue: Int? = null,
@@ -38,7 +38,7 @@ data class MediaDetails(
     val status: String? = null,
     @SerializedName("tagline")
     val tagline: String? = null,
-    @SerializedName("title")
+    @SerializedName("title", alternate = ["name"])
     val title: String? = null,
     @SerializedName("video")
     val video: Boolean? = null,

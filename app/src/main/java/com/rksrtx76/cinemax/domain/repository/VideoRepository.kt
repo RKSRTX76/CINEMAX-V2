@@ -8,6 +8,7 @@ import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 import kotlinx.coroutines.flow.Flow
 
-//interface VideoRepository {
-//    suspend fun getVideos(mediaId : Int, mediaType : MediaType) : Resource<VideosDto>
-//}
+interface VideoRepository {
+    suspend fun getVideosForMovies(mediaId : Int) : Resource<VideosDto>
+    suspend fun getVideosForSeries(mediaId : Int) : Resource<VideosDto>
+}

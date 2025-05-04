@@ -2,6 +2,7 @@ package com.rksrtx76.cinemax.presentation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rksrtx76.cinemax.presentation.screens.details.CastListScreen
 import com.rksrtx76.cinemax.presentation.screens.details.DetailScreen
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
@@ -66,6 +68,16 @@ fun Navigation(
             val type = it.arguments?.getString("type") ?: ""
             Timber.d("Navigation: $id $type")
 
+            LaunchedEffect(id, type) {
+                val result = if(type == "movie") {
+                    detailsViewModel.getMovieDetails(id)
+                    detailsViewModel.getMovieCastDetails(id)
+                } else {
+                    detailsViewModel.getSeriesDetails(id)
+                    detailsViewModel.getSeriesCastDetails(id)
+                }
+            }
+
             DetailScreen(
                 lifecycleOwner = lifecycleOwner,
                 mediaId = id,
@@ -74,6 +86,24 @@ fun Navigation(
                 detailsViewModel = detailsViewModel
             )
         }
+
+        composable(
+            "${Screen.CAST_LIST_SCREEN}?castId={id}&type={type}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType},
+                navArgument("type") { type = NavType.StringType}
+            )
+        ){
+            val id = it.arguments?.getInt("id") ?: 0
+            val type = it.arguments?.getString("type") ?: ""
+
+            CastListScreen(
+                detailsViewModel = detailsViewModel,
+                type = type
+            )
+
+        }
+
         composable(BottomNav.BOOKMARK_SCREEN){
 //            BookMarkScreen()
         }

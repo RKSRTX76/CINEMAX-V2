@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rksrtx76.cinemax.data.model.MediaDetails
 import com.rksrtx76.cinemax.data.remote.dto.CastResponseDto
+import com.rksrtx76.cinemax.data.remote.dto.VideosDto
 import com.rksrtx76.cinemax.domain.repository.CastRepository
 import com.rksrtx76.cinemax.domain.repository.MediaRepository
+import com.rksrtx76.cinemax.domain.repository.VideoRepository
 import com.rksrtx76.cinemax.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val mediaRepository: MediaRepository,
-    private val castRepository: CastRepository
+    private val castRepository: CastRepository,
+    private val videosRepository: VideoRepository
 ) : ViewModel(){
 
     private val _movieDetails = mutableStateOf<Resource<MediaDetails>>(Resource.Loading())
@@ -25,9 +28,16 @@ class DetailsViewModel @Inject constructor(
     private val _seriesDetails = mutableStateOf<Resource<MediaDetails>>(Resource.Loading())
     val seriesDetails = _seriesDetails
 
+    private val _movieVideos = mutableStateOf<Resource<VideosDto>>(Resource.Loading())
+    val movieVideos = _movieVideos
+
+    private val _seriesVideos = mutableStateOf<Resource<VideosDto>>(Resource.Loading())
+    val seriesVideos = _seriesVideos
+
     // State for Cast
     private val _castDetails = mutableStateOf<Resource<CastResponseDto>>(Resource.Loading())
     val castDetails = _castDetails
+
 
     fun getMovieDetails(mediaId: Int) {
         viewModelScope.launch {
@@ -40,6 +50,19 @@ class DetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val result = mediaRepository.getTVDetails(mediaId)
             _seriesDetails.value = result
+        }
+    }
+
+    fun getMovieVideos(mediaId : Int){
+        viewModelScope.launch {
+            val result = videosRepository.getVideosForMovies(mediaId)
+            _movieVideos.value = result
+        }
+    }
+    fun getSeriesVideos(mediaId : Int){
+        viewModelScope.launch {
+            val result = videosRepository.getVideosForSeries(mediaId)
+            _seriesVideos.value = result
         }
     }
 
