@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -57,14 +59,32 @@ fun ShowCast(
         modifier = modifier.padding(top = 16.dp)
     ) {
         if(castList.isNotEmpty()){
-            Text(
-                modifier = Modifier.padding(horizontal = 22.dp),
-                fontWeight = FontWeight.Bold,
-                text = title,
-                color = MaterialTheme.colorScheme.onBackground,
-                fontFamily = font,
-                fontSize = 20.sp
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 22.dp),
+                    fontWeight = FontWeight.Bold,
+                    text = title,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontFamily = font,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = stringResource(R.string.see_all),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = font,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .clickable {
+                            navController.navigate("${Screen.CAST_LIST_SCREEN}?castId=${castList.firstOrNull()?.id}&type=$type")
+                        }
+                )
+            }
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 contentPadding = PaddingValues(16.dp)
@@ -76,24 +96,8 @@ fun ShowCast(
                     ){
                         CastMemberItem(
                             cast = castList[idx],
-                            modifier = Modifier.padding(end = 16.dp)
                         )
                     }
-                }
-
-                item {
-                    Text(
-                        text = stringResource(R.string.see_all),
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = font,
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clickable {
-                                navController.navigate("${Screen.CAST_LIST_SCREEN}?castId=${castList.firstOrNull()?.id}&type=$type")
-                            }
-                    )
                 }
             }
         }

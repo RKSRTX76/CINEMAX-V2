@@ -9,7 +9,7 @@ fun GenresProvider(
 ) : String {
     var genreList = ""
     for(genre in genres!!){
-        genreList += genre.name + " "
+        genreList += genre.name + "-"
     }
 
     return genreList.dropLastWhile {

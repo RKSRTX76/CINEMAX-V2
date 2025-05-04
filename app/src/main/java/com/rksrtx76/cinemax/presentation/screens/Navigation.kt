@@ -34,7 +34,7 @@ fun Navigation(
     val searchViewModel = hiltViewModel<SearchViewModel>()
     val lifecycleOwner = LocalLifecycleOwner.current
     val detailsViewModel = hiltViewModel<DetailsViewModel>()
-    val navController = rememberNavController()
+//    val navController = rememberNavController()
     NavHost(
         navController = bottomNavController,
         startDestination = BottomNav.MEDIA_MAIN_SCREEN
@@ -47,9 +47,7 @@ fun Navigation(
         }
         composable(BottomNav.SEARCH_SCREEN){ navBackStackEntry ->
             SearchScreen(
-                bottomNavController = bottomNavController,
                 selectedItem = selectedItem,
-                navBackStackEntry = navBackStackEntry,
                 navController = bottomNavController,
                 searchViewModel = searchViewModel,
                 homeViewModel = homeViewModel,
@@ -82,7 +80,7 @@ fun Navigation(
                 lifecycleOwner = lifecycleOwner,
                 mediaId = id,
                 mediaType = type,
-                navController = navController,
+                navController = bottomNavController,
                 detailsViewModel = detailsViewModel
             )
         }

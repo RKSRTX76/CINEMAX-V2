@@ -25,9 +25,8 @@ fun InfoSection(
     media : MediaDetails,
     type : String
 ){
-    val genres = GenresProvider(
-        genres = media.genres
-    )
+    val genres = GenresProvider(genres = media.genres)
+
         Column {
             Spacer(Modifier.height(242.dp))
 
@@ -38,7 +37,7 @@ fun InfoSection(
                         color = MaterialTheme.colorScheme.onSurface,
                         shape = RoundedCornerShape(6.dp)
                     )
-                    .padding(horizontal = 4.dp, vertical = 0.dp),
+                    .padding(horizontal = 5.dp, vertical = 0.dp),
                 text = if(type == "movie") "Movie" else "Series",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = font,
@@ -52,6 +51,15 @@ fun InfoSection(
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = font,
                 fontSize = 18.sp
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Release date: " + media.release_date.toString(),
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = font,
+                fontSize = 13.sp
             )
 
             Row(
@@ -75,36 +83,20 @@ fun InfoSection(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(
-                    text = if(media.release_date != "unavailable") media.release_date?.take(4) ?: "" else "",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontFamily = font,
-                    fontSize = 15.sp
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-
-                val ageRating = if (media.adult == true) "18+" else ""
-                if(ageRating != ""){
-                    Text(
-                        modifier = Modifier
-                            .border(
-                                width = 1.dp,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                shape = RoundedCornerShape(6.dp)
-                            )
-                            .padding(horizontal = 4.dp, vertical = 0.dp),
-                        text = ageRating,
+            val ageRating = if (media.adult == true) "18+" else "12+"
+            Text(
+                modifier = Modifier
+                    .border(
+                        width = 1.dp,
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontFamily = font,
-                        fontSize = 13.sp
+                        shape = RoundedCornerShape(6.dp)
                     )
-                }
-
-                Spacer(modifier = Modifier.width(8.dp))
-            }
+                    .padding(horizontal = 4.dp, vertical = 0.dp),
+                text = ageRating,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontFamily = font,
+                fontSize = 13.sp
+            )
 
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -119,14 +111,14 @@ fun InfoSection(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            Text(
-                modifier= Modifier.padding(end = 8.dp),
-                text = media.runtime.toString(),
-                fontFamily = font,
-                fontSize = 15.sp,
-                color = MaterialTheme.colorScheme.onSurface,
-                lineHeight = 16.sp
-            )
+//            Text(
+//                modifier= Modifier.padding(end = 8.dp),
+//                text = media.runtime.toString(),
+//                fontFamily = font,
+//                fontSize = 15.sp,
+//                color = MaterialTheme.colorScheme.onSurface,
+//                lineHeight = 16.sp
+//            )
 
         }
 }

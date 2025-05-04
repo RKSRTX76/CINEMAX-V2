@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -48,10 +49,12 @@ fun CastListScreen(
             )
         } else {
             LazyVerticalGrid(
+                modifier = Modifier.statusBarsPadding(),
                 columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(top = SmallRadius.dp),
+                contentPadding = PaddingValues(top = SmallRadius.dp, bottom = 78.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+
             ) {
                 item(span = { GridItemSpan(2) }) {
                     Column(

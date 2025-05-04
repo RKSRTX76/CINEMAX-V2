@@ -53,9 +53,7 @@ fun SearchScreen(
     homeViewModel: HomeViewModel,
     searchViewModel: SearchViewModel,
     selectedItem : MutableState<Int>,
-    navBackStackEntry: NavBackStackEntry,
     navController: NavController,
-    bottomNavController: NavController,
     paddingValues: PaddingValues,
 ) {
     val searchQuery = searchViewModel.searchQuery.value
@@ -65,7 +63,7 @@ fun SearchScreen(
 
     BackHandler(enabled = true) {
         selectedItem.value = 0
-        bottomNavController.navigate(BottomNav.MEDIA_MAIN_SCREEN)
+        navController.navigate(BottomNav.MEDIA_MAIN_SCREEN)
     }
 
 

@@ -156,11 +156,14 @@ fun DetailScreen(
                             )
                         }
 
-//            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-//            SimilarMediaSection()
+            SimilarMediaSection(
+                navController = navController,
+                media = mediaDetails
+            )
 
-//            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
