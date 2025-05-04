@@ -28,6 +28,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.presentation.screens.components.GenreSelectable
 import com.rksrtx76.cinemax.presentation.screens.components.ShouldShowMediaHomeScreenSectionOrShimmer
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants.AIRING
 import com.rksrtx76.cinemax.util.Constants.MOVIE_TAB
@@ -48,6 +49,7 @@ fun HomeScreenContent(
     bottomBarNavController : NavController,
     scrollBehavior: TopAppBarScrollBehavior,
     homeViewModel: HomeViewModel,
+    detailsViewModel: DetailsViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
 
@@ -142,6 +144,7 @@ fun HomeScreenContent(
                     pagingItems = trendingMedia,
                     modifier = modifier,
                     homeViewModel = homeViewModel,
+                    detailsViewModel = detailsViewModel,
                     navController = navController,
                     bottomBarNavController = bottomBarNavController,
                 )
@@ -155,6 +158,7 @@ fun HomeScreenContent(
                     pagingItems = popularMedia,
                     modifier = modifier,
                     homeViewModel = homeViewModel,
+                    detailsViewModel = detailsViewModel,
                     navController = navController,
                     bottomBarNavController = bottomBarNavController,
                 )
@@ -167,6 +171,7 @@ fun HomeScreenContent(
                     pagingItems = topRatedMedia,
                     modifier = modifier,
                     homeViewModel = homeViewModel,
+                    detailsViewModel = detailsViewModel,
                     navController = navController,
                     bottomBarNavController = bottomBarNavController,
                 )
@@ -179,6 +184,7 @@ fun HomeScreenContent(
                         pagingItems = nowPlayingMovies,
                         modifier = modifier,
                         homeViewModel = homeViewModel,
+                        detailsViewModel = detailsViewModel,
                         navController = navController,
                         bottomBarNavController = bottomBarNavController,
                     )
@@ -193,6 +199,7 @@ fun HomeScreenContent(
                         pagingItems = upcomingMovies,
                         modifier = modifier,
                         homeViewModel = homeViewModel,
+                        detailsViewModel = detailsViewModel,
                         navController = navController,
                         bottomBarNavController = bottomBarNavController,
                     )
@@ -206,6 +213,7 @@ fun HomeScreenContent(
                         pagingItems = airingTodaySeries,
                         modifier = modifier,
                         homeViewModel = homeViewModel,
+                        detailsViewModel = detailsViewModel,
                         navController = navController,
                         bottomBarNavController = bottomBarNavController,
                     )
@@ -220,6 +228,7 @@ fun HomeScreenContent(
                         pagingItems = recommendedMedia,
                         modifier = modifier,
                         homeViewModel = homeViewModel,
+                        detailsViewModel = detailsViewModel,
                         navController = navController,
                         bottomBarNavController = bottomBarNavController,
                     )

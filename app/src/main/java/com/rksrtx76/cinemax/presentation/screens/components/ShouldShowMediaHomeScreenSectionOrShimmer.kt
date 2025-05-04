@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import com.rksrtx76. CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants
 import timber.log.Timber
@@ -23,6 +24,7 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
     pagingItems : LazyPagingItems<Media>,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel,
+    detailsViewModel : DetailsViewModel,
     navController: NavController,
     bottomBarNavController: NavController
 ) {
@@ -45,6 +47,7 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
             mediaItems = pagingItems,
             modifier = modifier,
             homeViewModel = homeViewModel,
+            detailsViewModel = detailsViewModel,
             navController = navController,
             bottomNavController = bottomBarNavController
         )

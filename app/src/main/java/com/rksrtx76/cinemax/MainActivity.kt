@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     Navigation(
                         paddingValues = paddingValues,
                         selectedItem = selectedItem,
-                        bottomNavController = bottomNavController
+                        bottomNavController = bottomNavController,
                     )
                 }
             }

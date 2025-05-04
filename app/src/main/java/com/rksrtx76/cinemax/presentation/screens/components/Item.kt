@@ -11,6 +11,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.Radius
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
@@ -43,7 +45,9 @@ import kotlin.text.category
 fun Item(
     media : Media,
     homeViewModel: HomeViewModel,
+    detailsViewModel : DetailsViewModel,
     navController: NavController,
+    type : String,
     modifier: Modifier = Modifier
 ) {
 
@@ -70,8 +74,17 @@ fun Item(
         modifier = modifier
             .clip(RoundedCornerShape(Radius.dp))
             .clickable {
+//                if(type == "movie") {
+//                    detailsViewModel.getMovieDetails(media.id)
+//                    detailsViewModel.getMovieCastDetails(media.id)
+//                    homeViewModel.getSimilarMovies(media.id)
+//                } else {
+//                    detailsViewModel.getSeriesDetails(media.id)
+//                    detailsViewModel.getSeriesCastDetails(media.id)
+//                    homeViewModel.getSimilarSeries(media.id)
+//                }
                 navController.navigate(
-                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=$selectedOption"
+                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=$type"
                 )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)

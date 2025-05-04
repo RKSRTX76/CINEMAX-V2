@@ -49,29 +49,32 @@ fun HomeNavigation(
                 navController = navController,
                 scrollBehavior = scrollBehavior,
                 homeViewModel = homeViewModel,
+                detailsViewModel = detailsViewModel,
                 bookMarkViewModel = bookMarkViewModel
             )
         }
 
-        composable(
-            "${Screen.DETAILS_SCREEN}?id={id}&type={type}",
-            arguments = listOf(
-                navArgument("id") { type = NavType.IntType },
-                navArgument("type") { type = NavType.StringType }
-            )
-        ) {
-            val id = it.arguments?.getInt("id") ?: 0
-            val type = it.arguments?.getString("type") ?: ""
-            Timber.d("Navigation: $id $type")
-
-            DetailScreen(
-                lifecycleOwner = lifecycleOwner,
-                mediaId = id,
-                mediaType = type,
-                navController = navController,
-                detailsViewModel = detailsViewModel
-            )
-        }
+//        composable(
+//            "${Screen.DETAILS_SCREEN}?id={id}&type={type}",
+//            arguments = listOf(
+//                navArgument("id") { type = NavType.IntType },
+//                navArgument("type") { type = NavType.StringType }
+//            )
+//        ) {
+//            val id = it.arguments?.getInt("id") ?: 0
+//            val type = it.arguments?.getString("type") ?: ""
+//            Timber.d("Navigation: $id $type")
+//
+//            DetailScreen(
+//                lifecycleOwner = lifecycleOwner,
+//                mediaId = id,
+//                mediaType = type,
+//                navController = navController,
+//                detailsViewModel = detailsViewModel,
+//                homeViewModel = homeViewModel,
+//                paddingValues = paddingValues
+//            )
+//        }
 
 
     }

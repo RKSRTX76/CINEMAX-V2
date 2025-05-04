@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants.BACKDROP_IMAGE_BASE_URL
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
 import com.rksrtx76.cinemax.util.Resource
@@ -49,6 +51,8 @@ fun DetailScreen(
     mediaType : String,
     navController: NavController,
     detailsViewModel: DetailsViewModel,
+    homeViewModel: HomeViewModel,
+    paddingValues: PaddingValues
 ) {
 
     val mediaDetails = if(mediaType == "movie") detailsViewModel.movieDetails.value else detailsViewModel.seriesDetails.value
@@ -156,14 +160,18 @@ fun DetailScreen(
                             )
                         }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
 
-            SimilarMediaSection(
-                navController = navController,
-                media = mediaDetails
-            )
+                        SimilarMediaSection(
+                            navController = navController,
+                            detailsViewModel = detailsViewModel,
+                            homeViewModel = homeViewModel,
+                            media = mediaDetails.data,
+                            type = mediaType,
+                            paddingValues = paddingValues
+                        )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }

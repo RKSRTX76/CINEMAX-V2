@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.font
 import com.rksrtx76.cinemax.util.MediaType
@@ -40,6 +41,7 @@ fun MediaHomeScreenSection(
     modifier : Modifier = Modifier,
     navController: NavController,
     homeViewModel: HomeViewModel,
+    detailsViewModel : DetailsViewModel,
     bottomNavController: NavController
 ) {
 
@@ -71,8 +73,10 @@ fun MediaHomeScreenSection(
                 mediaItems[idx]?.let { media ->
                     Item(
                         media = media,
+                        type = homeViewModel.selectedOption.value,
                         navController = bottomNavController,
                         homeViewModel = homeViewModel,
+                        detailsViewModel = detailsViewModel,
                         modifier = Modifier
                             .height(195.dp)
                             .width(125.dp)

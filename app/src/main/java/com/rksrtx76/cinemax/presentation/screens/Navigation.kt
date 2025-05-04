@@ -70,9 +70,11 @@ fun Navigation(
                 val result = if(type == "movie") {
                     detailsViewModel.getMovieDetails(id)
                     detailsViewModel.getMovieCastDetails(id)
+                    homeViewModel.getSimilarMovies(id)
                 } else {
                     detailsViewModel.getSeriesDetails(id)
                     detailsViewModel.getSeriesCastDetails(id)
+                    homeViewModel.getSimilarSeries(id)
                 }
             }
 
@@ -81,7 +83,9 @@ fun Navigation(
                 mediaId = id,
                 mediaType = type,
                 navController = bottomNavController,
-                detailsViewModel = detailsViewModel
+                detailsViewModel = detailsViewModel,
+                homeViewModel = homeViewModel,
+                paddingValues = paddingValues
             )
         }
 
@@ -97,7 +101,8 @@ fun Navigation(
 
             CastListScreen(
                 detailsViewModel = detailsViewModel,
-                type = type
+                type = type,
+                paddingValues = paddingValues
             )
 
         }
