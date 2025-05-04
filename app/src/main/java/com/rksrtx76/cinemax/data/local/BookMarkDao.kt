@@ -8,8 +8,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookMarkDao {
+
+    @Query("SELECT * FROM bookmark_list ORDER BY addedOn DESC")
+    fun getBookMarkList() : Flow<List<BookMark>>
+
+    @Query("SELECT * FROM bookmark_list WHERE mediaId =:mediaId")
+    fun getABookmark(mediaId : Int) : BookMark
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertToBookMarkList(media : MediaEntity)
+    suspend fun insertToBookMarkList(bookmark : BookMark)
 
     @Query("DELETE FROM bookmark_list WHERE mediaId = :mediaId")
     suspend fun removeFromBookMarkList(mediaId : Int)
@@ -20,6 +27,4 @@ interface BookMarkDao {
     @Query("SELECT EXISTS(SELECT 1 FROM bookmark_list WHERE mediaId = :mediaId)")
     suspend fun exists(mediaId : Int) : Int
 
-    @Query("SELECT * FROM bookmark_list ORDER BY addedOn DESC")
-    fun getBookMarkList() : Flow<List<MediaEntity>>
 }

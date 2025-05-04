@@ -23,30 +23,28 @@ import com.rksrtx76.cinemax.util.MediaType
 @Composable
 fun TabScreen(
     homeViewModel: HomeViewModel,
-    tabPage: MediaType,
-    onTabSelected : (MediaType) -> Unit,
+    tabPage: Int,
+    onTabSelected: (Int) -> Unit,
 ) {
-    val selectedMediaType by rememberUpdatedState(
-        homeViewModel.selectedMediaType.value
-    )
+
 
     TabRow(
-        selectedTabIndex = tabPage.ordinal,
+        selectedTabIndex = tabPage,
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onPrimary,
     ) {
         HomeTab(
             title = stringResource(R.string.movies),
-            fontWeight = if(selectedMediaType == MediaType.MOVIE) FontWeight.Bold else FontWeight.Normal,
+            fontWeight = if(tabPage == 0) FontWeight.Bold else FontWeight.Normal,
             onClick = {
-                onTabSelected(MediaType.MOVIE)
+                onTabSelected(0)
             }
         )
         HomeTab(
             title = stringResource(R.string.tv_series),
-            fontWeight = if(selectedMediaType == MediaType.TVSHOW) FontWeight.Bold else FontWeight.Normal,
+            fontWeight = if(tabPage == 1) FontWeight.Bold else FontWeight.Normal,
             onClick = {
-                onTabSelected(MediaType.TVSHOW)
+                onTabSelected(1)
             }
         )
     }

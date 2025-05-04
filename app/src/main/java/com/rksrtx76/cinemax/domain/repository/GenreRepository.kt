@@ -5,5 +5,6 @@ import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 
 interface GenreRepository {
-    suspend fun getMediaGenre(mediaType : MediaType) : Resource<GenreResponseDto>
+    suspend fun getMovieGenres() : Resource<GenreResponseDto>
+    suspend fun getTVGenres() : Resource<GenreResponseDto>
 }

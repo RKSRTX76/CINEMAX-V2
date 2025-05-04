@@ -6,42 +6,34 @@ import com.google.gson.annotations.SerializedName
 import com.rksrtx76.cinemax.data.model.Video
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
+
 data class Media(
     @SerializedName("adult")
-    val adult: Boolean = true,
+    val adult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String?,
-    @SerializedName("poster_path")
-    val posterPath: String?,
+    val backdrop_path: String,
     @SerializedName("genre_ids")
-    val genreIds: List<Int>?,
-    @SerializedName("genres")
-    val genres: List<Genre>?,
-    @SerializedName("media_type")
-    val mediaType: String?,
+    val genre_ids: List<Int>,
     @SerializedName("id")
     val id: Int,
-    @SerializedName("imdb_id")
-    val imdbId: String?,
     @SerializedName("original_language")
-    val originalLanguage: String,
+    val original_language: String,
+    @SerializedName("original_title")
+    val original_title: String,
     @SerializedName("overview")
     val overview: String,
     @SerializedName("popularity")
     val popularity: Double,
-    @SerializedName("release_date", alternate = ["first_air_date"])
-    val releaseDate: String,
-    @SerializedName("runtime")
-    val runtime: Int?,
-    @SerializedName("title", alternate = ["name"])
+    @SerializedName("poster_path")
+    val poster_path: String,
+    @SerializedName("release_date")
+    val release_date: String,
+    @SerializedName("title")
     val title: String,
     @SerializedName("video")
     val video: Boolean,
-    @SerializedName("videos")
-    val videoIds: List<Video>?,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val vote_average: Double,
     @SerializedName("vote_count")
-    val voteCount: Int
-) : Parcelable
+    val vote_count: Int
+)

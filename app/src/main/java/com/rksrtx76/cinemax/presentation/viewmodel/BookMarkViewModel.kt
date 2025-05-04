@@ -3,61 +3,51 @@ package com.rksrtx76.cinemax.presentation.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rksrtx76.cinemax.data.local.MediaEntity
-import com.rksrtx76.cinemax.data.repository.BookMarkListRepositoryImpl
+import com.rksrtx76.cinemax.data.local.BookMark
+import com.rksrtx76.cinemax.domain.repository.BookMarkListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
-    private val bookMarkListRepositoryImpl: BookMarkListRepositoryImpl
+    private val bookMarkListRepository: BookMarkListRepository
 ) : ViewModel() {
-    private val _addedToBookMarkList = MutableStateFlow(0)  // stores media id of added media to bookmark list
-    val addedToBookMarkList = _addedToBookMarkList.asStateFlow()
 
-    private val _bookMarkList = mutableStateOf<Flow<List<MediaEntity>>>(emptyFlow())
-    val bookMarkList = _bookMarkList
+    private val _bookmarkList = mutableStateOf<Flow<List<BookMark>>>(emptyFlow())
+    val bookMarkList = _bookmarkList
+
+    private val _insertToBookmark = mutableStateOf(0)
+    val insertToBookmark = _insertToBookmark
+
 
     init {
-        getBookMarkList()
+        getBookmarkList()
     }
 
-    fun addToBookMarkList(media : MediaEntity){
+    fun addToBookmarkList(bookmark : BookMark){
         viewModelScope.launch {
-            // inserts into Room DB
-            bookMarkListRepositoryImpl.insertToBookMarkList(media)
-            // checks if it was successfully added
-            exists(mediaId = media.mediaId)
+            bookMarkListRepository.insertToBookMarkList(bookmark)
+        }.invokeOnCompletion {
+            ifExists(bookmark.mediaId)
         }
     }
 
-    fun exists(mediaId : Int){
+    private fun getBookmarkList(){
+        _bookmarkList.value = bookMarkListRepository.getBookMarkList()
+    }
+
+    fun deleteAllBookMark(){
         viewModelScope.launch {
-            // insert mediaId to bookmark list if not exist then store 0
-            _addedToBookMarkList.value = bookMarkListRepositoryImpl.exists(mediaId)
+            bookMarkListRepository.deleteFromBookMarkList()
         }
     }
 
-    fun removeFromBookmarkList(mediaId : Int){
+    fun ifExists(mediaId : Int){
         viewModelScope.launch {
-            bookMarkListRepositoryImpl.removeFromBookMarkList(mediaId)
-            // check if removed or not
-            exists(mediaId)
-        }
-    }
-
-    private fun getBookMarkList(){
-        _bookMarkList.value = bookMarkListRepositoryImpl.getBookMarkList()
-    }
-
-    fun deleteBookMarkList(){
-        viewModelScope.launch {
-            bookMarkListRepositoryImpl.deleteFromBookMarkList()
+            _insertToBookmark.value = bookMarkListRepository.exists(mediaId)
         }
     }
 }

@@ -10,10 +10,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
-import com.rksrtx76.CINEMAX.model.Media
+import com.rksrtx76. CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants
+import timber.log.Timber
 
 @Composable
 fun ShouldShowMediaHomeScreenSectionOrShimmer(
@@ -23,9 +24,10 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel,
     navController: NavController,
-    navHostController: NavHostController
+    bottomBarNavController: NavController
 ) {
     val title = getTitle(type)
+    Timber.d("Shimmer: $type")
 
     if(showShimmer){
         // if list empty then show shimmer only (no data)
@@ -37,14 +39,14 @@ fun ShouldShowMediaHomeScreenSectionOrShimmer(
 //                .padding(top = 20.dp, bottom = 12.dp)
         )
     }else{
+
         MediaHomeScreenSection(
             title = title,
-            type = type,
             mediaItems = pagingItems,
             modifier = modifier,
             homeViewModel = homeViewModel,
             navController = navController,
-            bottomNavController = navHostController
+            bottomNavController = bottomBarNavController
         )
     }
 

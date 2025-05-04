@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 /** This is similar to Film only that everything is nullable.*/
 data class Search(
     @SerializedName("adult")
-    val adult: Boolean? = true,
+    val adult: Boolean?,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
+    @SerializedName("first_air_date")
+    val firstAirDate: String?,
     @SerializedName("genre_ids")
     val genreIds: List<Int>?,
-    @SerializedName("genres")
-    val genres: List<Genre>?,
     @SerializedName("id")
     val id: Int?,
-    @SerializedName("imdb_id")
-    val imdbId: String?,
     @SerializedName("media_type")
     val mediaType: String?,
+    @SerializedName("name")
+    val name: String?,
     @SerializedName("origin_country")
     val originCountry: List<String>?,
     @SerializedName("original_language")
@@ -32,14 +32,12 @@ data class Search(
     val popularity: Double?,
     @SerializedName("poster_path")
     val posterPath: String?,
-    @SerializedName("release_date", alternate = ["first_air_date"])
+    @SerializedName("release_date")
     val releaseDate: String?,
-    @SerializedName("title", alternate = ["name"])
+    @SerializedName("title")
     val title: String?,
     @SerializedName("video")
     val video: Boolean?,
-    @SerializedName("runtime")
-    val runtime: Int?,
     @SerializedName("vote_average")
     val voteAverage: Double?,
     @SerializedName("vote_count")

@@ -1,37 +1,60 @@
 package com.rksrtx76.cinemax.presentation.viewmodel
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import com.rksrtx76.CINEMAX.model.Cast
-import com.rksrtx76.CINEMAX.model.Media
-import com.rksrtx76.cinemax.data.repository.MediaRepositoryImpl
-import com.rksrtx76.cinemax.util.MediaType
+import com.rksrtx76.cinemax.data.model.MediaDetails
+import com.rksrtx76.cinemax.data.remote.dto.CastResponseDto
+import com.rksrtx76.cinemax.domain.repository.CastRepository
+import com.rksrtx76.cinemax.domain.repository.MediaRepository
+import com.rksrtx76.cinemax.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val mediaRepositoryImpl: MediaRepositoryImpl
+    private val mediaRepository: MediaRepository,
+    private val castRepository: CastRepository
 ) : ViewModel(){
-    private val _similarMedia = MutableStateFlow<Flow<PagingData<Media>>>(emptyFlow())
-    val similarMedia = _similarMedia.asStateFlow()
 
-    private val _mediaCast = MutableStateFlow<List<Cast>>(emptyList())
-    val mediaCast = _mediaCast.asStateFlow()
+    private val _movieDetails = mutableStateOf<Resource<MediaDetails>>(Resource.Loading())
+    val movieDetails = _movieDetails
 
-    fun getSimilarMedia(mediaId : Int, mediaType: MediaType){
+    private val _seriesDetails = mutableStateOf<Resource<MediaDetails>>(Resource.Loading())
+    val seriesDetails = _seriesDetails
+
+    // State for Cast
+    private val _castDetails = mutableStateOf<Resource<CastResponseDto>>(Resource.Loading())
+    val castDetails = _castDetails
+
+    fun getMovieDetails(mediaId: Int) {
         viewModelScope.launch {
-            mediaRepositoryImpl.getSimilarMedia(mediaId, mediaType).also {
-                _similarMedia.value = it
-            }
+            val result = mediaRepository.getMovieDetails(mediaId)
+            _movieDetails.value = result
         }
     }
 
+    fun getSeriesDetails(mediaId: Int) {
+        viewModelScope.launch {
+            val result = mediaRepository.getTVDetails(mediaId)
+            _seriesDetails.value = result
+        }
+    }
 
+    fun getMovieCastDetails(mediaId: Int) {
+        viewModelScope.launch {
+            val result = castRepository.getMovieCastDetails(mediaId)
+            Timber.d("DetailsViewModel - Cast, ${result.data}")
+            _castDetails.value = result
+        }
+    }
+    fun getSeriesCastDetails(mediaId: Int) {
+        viewModelScope.launch {
+            val result = castRepository.getSeriesCastDetails(mediaId)
+            Timber.d("DetailsViewModel - Cast, ${result.data}")
+            _castDetails.value = result
+        }
+    }
 }

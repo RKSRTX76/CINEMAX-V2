@@ -13,13 +13,13 @@ import javax.inject.Singleton
 
 @Singleton
 class SearchRepositoryImpl @Inject constructor(
-    private val mediaApiService: MediaApiService
+    private val mediaApiService: MediaApiService,
 ) : SearchRepository {
-    override fun multiSearch(searchParams : String, includeAdult : Boolean) : Flow<PagingData<Search>> {
+    override fun multiSearch(searchParams : String) : Flow<PagingData<Search>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                SearchMediaSource(api = mediaApiService, searchParams = searchParams, includeAdult = includeAdult)
+                SearchMediaSource(mediaApiService, searchParams)
             }
         ).flow
     }

@@ -5,8 +5,6 @@ import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 
 interface CastRepository {
-    suspend fun getMediaCast(
-        mediaId : Int,
-        mediaType : MediaType
-    ) : Resource<CastResponseDto>
+    suspend fun getMovieCastDetails(mediaId : Int) : Resource<CastResponseDto>
+    suspend fun getSeriesCastDetails(mediaId : Int) : Resource<CastResponseDto>
 }

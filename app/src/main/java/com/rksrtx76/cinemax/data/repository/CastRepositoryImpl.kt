@@ -13,11 +13,21 @@ class CastRepositoryImpl @Inject constructor(
     private val mediaApiService: MediaApiService
 ) : CastRepository {
     /** Non Paging data **/
-    override suspend fun getMediaCast(mediaId : Int, mediaType : MediaType) : Resource<CastResponseDto> {
-        val response = try{
-            if(mediaType == MediaType.MOVIE) mediaApiService.getMovieCast(movieId = mediaId) else mediaApiService.getTvShowCast(showId = mediaId)
+
+    override suspend fun getMovieCastDetails(mediaId: Int): Resource<CastResponseDto> {
+        val response = try {
+            mediaApiService.getMovieCredits(mediaId)
         }catch (e : Exception){
-            return Resource.Error("Error occurs while Loading cast")
+            return Resource.Error("Unexpected Error")
+        }
+        return Resource.Success(response)
+    }
+
+    override suspend fun getSeriesCastDetails(mediaId: Int): Resource<CastResponseDto> {
+        val response = try {
+            mediaApiService.getTvCredits(mediaId)
+        }catch (e : Exception){
+            return Resource.Error("Unexpected Error")
         }
         return Resource.Success(response)
     }

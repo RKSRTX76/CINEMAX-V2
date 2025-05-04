@@ -83,7 +83,7 @@ fun FocusedSearchBar(
             },
             placeholderText = stringResource(R.string.movies_shows_and_more),
             onValueChange = { newQuery ->
-                searchViewModel.onSearchQueryChanged(newQuery)
+                searchViewModel.updateSearchQuery(newQuery)
             },
             searchViewModel = searchViewModel,
             isDarkTheme = isDarkTheme,
@@ -167,7 +167,7 @@ fun SearchBar(
                             .padding(horizontal = 8.dp)
                             .size(28.dp)
                             .clickable {
-                                searchViewModel.onSearchQueryChanged("")
+                                searchViewModel.updateSearchQuery("")
                             }
                     )
                 }

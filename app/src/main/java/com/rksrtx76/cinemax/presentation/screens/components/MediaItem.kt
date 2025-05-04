@@ -45,7 +45,7 @@ fun MediaItem(
     category: String,
     navController: NavController
 ) {
-    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.posterPath}"
+    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.poster_path}"
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
@@ -99,7 +99,7 @@ fun MediaItem(
         }
 
         // Rating badge
-        val vote = media.voteAverage.toString()
+        val vote = media.vote_average.toString()
         val firstDigit = vote.first().digitToIntOrNull() ?: 0
 
         val starColor = when(firstDigit){

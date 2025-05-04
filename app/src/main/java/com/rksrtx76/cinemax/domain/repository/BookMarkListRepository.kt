@@ -1,12 +1,13 @@
 package com.rksrtx76.cinemax.domain.repository
 
-import com.rksrtx76.cinemax.data.local.MediaEntity
+import com.rksrtx76.cinemax.data.local.BookMark
 import kotlinx.coroutines.flow.Flow
 
 interface BookMarkListRepository {
-    suspend fun insertToBookMarkList(media : MediaEntity)
-    suspend fun removeFromBookMarkList(mediaId : Int)
+    fun getBookMarkList() : Flow<List<BookMark>>
+    fun getBookMark(mediaId : Int) : BookMark
+    suspend fun insertToBookMarkList(media : BookMark)
     suspend fun exists(mediaId : Int) : Int
-    fun getBookMarkList() : Flow<List<MediaEntity>>
+    suspend fun removeFromBookMarkList(mediaId : Int)
     suspend fun deleteFromBookMarkList()
 }

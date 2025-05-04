@@ -30,7 +30,11 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { paddingValues ->
-                    Navigation(bottomNavController = bottomNavController, paddingValues = paddingValues)
+                    Navigation(
+                        paddingValues = paddingValues,
+                        selectedItem = selectedItem,
+                        bottomNavController = bottomNavController
+                    )
                 }
             }
         }

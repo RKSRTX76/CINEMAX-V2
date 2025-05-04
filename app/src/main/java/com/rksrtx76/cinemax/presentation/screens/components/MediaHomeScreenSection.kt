@@ -36,18 +36,13 @@ import timber.log.Timber
 @Composable
 fun MediaHomeScreenSection(
     title : String,
-    type : String,
     mediaItems: LazyPagingItems<Media>,
     modifier : Modifier = Modifier,
     navController: NavController,
     homeViewModel: HomeViewModel,
-    bottomNavController: NavHostController
+    bottomNavController: NavController
 ) {
 
-    val currMediaType = homeViewModel.selectedMediaType.value
-    val mediaType = if(currMediaType.ordinal == MediaType.MOVIE.ordinal) "movie" else "tv"
-
-    Timber.d("MediaHomeScreenSection: $mediaType")
 
     Column(modifier = Modifier.padding(bottom = 12.dp)) {
         Row(
@@ -64,7 +59,7 @@ fun MediaHomeScreenSection(
                 fontSize = 18.sp
             )
         }
-
+        Timber.d("MediaHomeScreenSection: ${homeViewModel.selectedOption.value}")
         LazyRow(
             modifier = Modifier,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -76,8 +71,8 @@ fun MediaHomeScreenSection(
                 mediaItems[idx]?.let { media ->
                     Item(
                         media = media,
-//                        type = mediaType,
-                        navController = navController,
+                        navController = bottomNavController,
+                        homeViewModel = homeViewModel,
                         modifier = Modifier
                             .height(195.dp)
                             .width(125.dp)

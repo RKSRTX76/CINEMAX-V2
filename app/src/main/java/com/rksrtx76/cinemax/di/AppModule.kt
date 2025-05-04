@@ -57,4 +57,37 @@ object AppModule {
         return UserPreferences(application.applicationContext)
     }
 
+//    @Singleton
+//    @Provides
+//    fun providesUseCases(repository: Repository) : UseCases{
+//        return UseCases(
+//            addToBookmarkedUseCase = AddToBookmarkedUseCase(repository),
+//         deleteAllFromBookmarkedUseCase = DeleteAllFromBookmarkedUseCase(repository),
+//         removeFromBookmarkedUseCase = RemoveFromBookmarkedUseCase(repository),
+//         isExistUseCase = IsExistUseCase(repository),
+//         getBookmarkListUseCase = GetBookmarkListUseCase(repository),
+//
+//         getMovieDetailsUseCase = GetMovieDetailsUseCase(repository),
+//         getTVDetailsUseCase = GetTVDetailsUseCase(repository),
+//         movieCastDetailsUseCase = MovieCastDetailsUseCase(repository),
+//         getMoviesGenreUseCase = GetMovieGenresUseCase(repository),
+//         getSeriesGenreUseCase = GetSeriesGenresUseCase(repository),
+//         getPopularMoviesUseCase = GetPopularMoviesUseCase(repository),
+//         getPopularSeriesUseCase = GetPopularSeriesUseCase(repository),
+//         getABookmarkedUseCase = GetABookmarkedUseCase(repository),
+//         getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(repository),
+//         getTopRatedSeriesUseCase = GetTopRatedSeriesUseCase(repository),
+//         getAiringTodaySeriesUseCase = GetAiringTodaySeriesUseCase(repository)
+//         getUpcomingMoviesUseCase = GetUpcomingMoviesUseCase(repository),
+//         multiSearchUseCase = MultiSearchUseCase(repository),
+//         getTrendingMoviesUseCase = GetTrendingMoviesUseCase(repository),
+//         getTrendingSeriesUseCase = GetTrendingSeriesUseCase(repository),
+//         getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase(repository),
+//         getSimilarMoviesUseCase = GetSimilarMoviesUseCase(repository),
+//         getSimilarSeriesUseCase = GetSimilarSeriesUseCase(repository),
+//         getRecommendedMoviesUseCase = GetRecommendedMoviesUseCase(repository),
+//         getRecommendedSeriesUseCase = GetRecommendedSeriesUseCase(repository)
+//        )
+//    }
+
 }

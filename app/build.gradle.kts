@@ -88,6 +88,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Pagination
     implementation(libs.androidx.paging.compose)
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

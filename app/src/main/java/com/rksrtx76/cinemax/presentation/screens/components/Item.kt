@@ -31,8 +31,10 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.Radius
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
+import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Screen
 import timber.log.Timber
 import kotlin.text.category
@@ -40,10 +42,12 @@ import kotlin.text.category
 @Composable
 fun Item(
     media : Media,
+    homeViewModel: HomeViewModel,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media!!.posterPath}"
+
+    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.poster_path}"
     val imagePainter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
@@ -57,14 +61,17 @@ fun Item(
     var dominantColor by remember{
         mutableStateOf(defaultDominator)
     }
+    val selectedOption = homeViewModel.selectedOption.value
 
-
+    Timber.d("Item- url, ${media.poster_path}")
+    Timber.d("Item- title, ${media.title}")
+    Timber.d("Item- overview, ${media.overview}")
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(Radius.dp))
             .clickable {
                 navController.navigate(
-                    "${Screen.DETAILS_SCREEN}?id=${media.id}"
+                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=$selectedOption"
                 )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)

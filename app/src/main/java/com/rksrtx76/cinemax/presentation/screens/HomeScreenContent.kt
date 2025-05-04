@@ -22,68 +22,80 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.presentation.screens.components.GenreSelectable
 import com.rksrtx76.cinemax.presentation.screens.components.ShouldShowMediaHomeScreenSectionOrShimmer
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
+import com.rksrtx76.cinemax.util.Constants.AIRING
+import com.rksrtx76.cinemax.util.Constants.MOVIE_TAB
 import com.rksrtx76.cinemax.util.Constants.NOW_PLAYING
 import com.rksrtx76.cinemax.util.Constants.POPULAR
 import com.rksrtx76.cinemax.util.Constants.RECOMMENDED
 import com.rksrtx76.cinemax.util.Constants.TOP_RATED
 import com.rksrtx76.cinemax.util.Constants.TRENDING
+import com.rksrtx76.cinemax.util.Constants.TV_SHOW_TAB
 import com.rksrtx76.cinemax.util.Constants.UPCOMING
-import com.rksrtx76.cinemax.util.MediaType
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenContent(
     modifier : Modifier = Modifier,
-//    navController: NavController,
+    navController: NavController,
     paddingValues: PaddingValues,
-    bottomBarNavController : NavHostController,
+    bottomBarNavController : NavController,
     scrollBehavior: TopAppBarScrollBehavior,
     homeViewModel: HomeViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
 
-    val navController = rememberNavController()
-    val selectedMediaType = homeViewModel.selectedMediaType.value
+    val listState = rememberLazyListState()
 
-    Timber.d("HomeScreenContent: $selectedMediaType") // receiving correct data
+    val bookmarkedList = bookMarkViewModel.bookMarkList.value.collectAsState(emptyList())
+    val recommendedMovies = homeViewModel.recommendedMovies.value.collectAsLazyPagingItems()
+    val recommendedSeries = homeViewModel.recommendedSeries.value.collectAsLazyPagingItems()
+    val trendingMovies = homeViewModel.trendingMovies.value.collectAsLazyPagingItems()
+    val trendingSeries = homeViewModel.trendingSeries.value.collectAsLazyPagingItems()
+    val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
+    val popularSeries = homeViewModel.popularSeries.value.collectAsLazyPagingItems()
+    val topRatedMovies = homeViewModel.topRatedMovies.value.collectAsLazyPagingItems()
+    val topRatedSeries = homeViewModel.topRatedSeries.value.collectAsLazyPagingItems()
+    val nowPlayingMovies = homeViewModel.nowPlayingMovies.value.collectAsLazyPagingItems()
+    val upcomingMovies = homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()
+    val airingTodaySeries = homeViewModel.airingTodaySeries.value.collectAsLazyPagingItems()
+    val similarMovies = homeViewModel.similarMovies.value.collectAsLazyPagingItems()
+    val similarSeries = homeViewModel.similarSeries.value.collectAsLazyPagingItems()
+
 
     val context = LocalContext.current
     BackHandler(enabled = true) {
         (context as Activity).finish()
     }
 
-    val trendingMedia = homeViewModel.trendingMedia.value.collectAsLazyPagingItems()
-    val popularMedia = homeViewModel.popularMedia.value.collectAsLazyPagingItems()
-    val topRatedMedia = homeViewModel.topRatedMedia.value.collectAsLazyPagingItems()
-    val nowPlayingMedia = homeViewModel.nowPlayingMedia.value.collectAsLazyPagingItems()
-    val upcomingMovie = homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()
-    val recommendedMedia = homeViewModel.recommendedMedia.value.collectAsLazyPagingItems()
-    val bookmarkMedia = bookMarkViewModel.bookMarkList.value.collectAsState(initial = emptyList())
-
-
-    val listState = rememberLazyListState()
-
-//    var tabPage by remember { mutableStateOf(MediaType.MOVIE) }
-
-
     // at launch setup recommended movies based on bookmark list
-    LaunchedEffect(bookmarkMedia.value.size) {
-        if(bookmarkMedia.value.isNotEmpty()){
+    LaunchedEffect(bookmarkedList) {
+        // filter by type
+        val filteredMedia = bookmarkedList.value.filter {
+            it.mediaType == homeViewModel.selectedOption.value
+        }
+        if(filteredMedia.isNotEmpty()){
             // pick a random media id from bookmark list
-            homeViewModel.randomMediaId = bookmarkMedia.value[
-                (0..bookmarkMedia.value.lastIndex).random()
-            ].mediaId
+            val randomBookmark = filteredMedia.random()
+            val randomBookMarkId = randomBookmark.mediaId
 
-            if(recommendedMedia.itemCount == 0){
-                homeViewModel.getRecommendedMedia(mediaId = homeViewModel.randomMediaId!!)
+            when(randomBookmark.mediaType){
+                "movie" ->{
+                    if(recommendedMovies.itemCount == 0 && recommendedMovies.loadState.refresh != LoadState.Loading){
+                        homeViewModel.getRecommendedMovies(randomBookMarkId)
+                    }
+                }
+                "tv" ->{
+                    if(recommendedSeries.itemCount == 0 && recommendedSeries.loadState.refresh != LoadState.Loading){
+                        homeViewModel.getRecommendedSeries(randomBookMarkId)
+                    }
+                }
             }
         }
     }
@@ -99,8 +111,7 @@ fun HomeScreenContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {
-                val genres = homeViewModel.mediaGenre
-                val selectedGenre = homeViewModel.selectedGenre
+                val genres = if(homeViewModel.selectedOption.value == MOVIE_TAB) homeViewModel.movieGenres.value else homeViewModel.tvGenres.value
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -111,11 +122,11 @@ fun HomeScreenContent(
                         val genre = genres[idx]
                         GenreSelectable(
                             genre = genre.name,
-                            selected = genre.name == selectedGenre.value.name,
+                            selected = genre.name == homeViewModel.selectedGenre.value,
                             onClick = {
-                                if(selectedGenre.value.name != genre.name){
-                                    homeViewModel.selectedGenre.value = genre
-                                    homeViewModel.filterBySetSelectedGenre(genre = genre)
+                                if(homeViewModel.selectedGenre.value != genre.name){
+                                    homeViewModel.setGenre(genre.name)
+                                    homeViewModel.filterByGenre(genre.id, homeViewModel.selectedOption.value)
                                 }
                             }
                         )
@@ -124,6 +135,7 @@ fun HomeScreenContent(
             }
 
             item{
+                val trendingMedia = if(homeViewModel.selectedOption.value == MOVIE_TAB) trendingMovies else trendingSeries
                 ShouldShowMediaHomeScreenSectionOrShimmer(
                     type = TRENDING,
                     showShimmer = trendingMedia.itemCount == 0,
@@ -131,11 +143,12 @@ fun HomeScreenContent(
                     modifier = modifier,
                     homeViewModel = homeViewModel,
                     navController = navController,
-                    navHostController = bottomBarNavController,
+                    bottomBarNavController = bottomBarNavController,
                 )
             }
 
             item{
+                val popularMedia = if(homeViewModel.selectedOption.value == MOVIE_TAB) popularMovies else popularSeries
                 ShouldShowMediaHomeScreenSectionOrShimmer(
                     type = POPULAR,
                     showShimmer = popularMedia.itemCount == 0,
@@ -143,10 +156,11 @@ fun HomeScreenContent(
                     modifier = modifier,
                     homeViewModel = homeViewModel,
                     navController = navController,
-                    navHostController = bottomBarNavController,
+                    bottomBarNavController = bottomBarNavController,
                 )
             }
             item{
+                val topRatedMedia = if(homeViewModel.selectedOption.value == MOVIE_TAB) topRatedMovies else topRatedSeries
                 ShouldShowMediaHomeScreenSectionOrShimmer(
                     type = TOP_RATED,
                     showShimmer = topRatedMedia.itemCount == 0,
@@ -154,35 +168,50 @@ fun HomeScreenContent(
                     modifier = modifier,
                     homeViewModel = homeViewModel,
                     navController = navController,
-                    navHostController = bottomBarNavController,
+                    bottomBarNavController = bottomBarNavController,
                 )
             }
-            item{
-                ShouldShowMediaHomeScreenSectionOrShimmer(
-                    type = NOW_PLAYING,
-                    showShimmer = nowPlayingMedia.itemCount == 0,
-                    pagingItems = nowPlayingMedia,
-                    modifier = modifier,
-                    homeViewModel = homeViewModel,
-                    navController = navController,
-                    navHostController = bottomBarNavController,
-                )
-            }
-            // UI basis lock
-            if(selectedMediaType == MediaType.MOVIE){
+            if(homeViewModel.selectedOption.value == MOVIE_TAB){
                 item{
                     ShouldShowMediaHomeScreenSectionOrShimmer(
-                        type = UPCOMING,
-                        showShimmer = upcomingMovie.itemCount == 0,
-                        pagingItems = upcomingMovie,
+                        type = NOW_PLAYING,
+                        showShimmer = nowPlayingMovies.itemCount == 0,
+                        pagingItems = nowPlayingMovies,
                         modifier = modifier,
                         homeViewModel = homeViewModel,
                         navController = navController,
-                        navHostController = bottomBarNavController,
+                        bottomBarNavController = bottomBarNavController,
                     )
                 }
             }
-
+            // UI basis lock
+            if(homeViewModel.selectedOption.value == MOVIE_TAB){
+                item{
+                    ShouldShowMediaHomeScreenSectionOrShimmer(
+                        type = UPCOMING,
+                        showShimmer = upcomingMovies.itemCount == 0,
+                        pagingItems = upcomingMovies,
+                        modifier = modifier,
+                        homeViewModel = homeViewModel,
+                        navController = navController,
+                        bottomBarNavController = bottomBarNavController,
+                    )
+                }
+            }
+            if(homeViewModel.selectedOption.value == TV_SHOW_TAB){
+                item{
+                    ShouldShowMediaHomeScreenSectionOrShimmer(
+                        type = AIRING,
+                        showShimmer = airingTodaySeries.itemCount == 0,
+                        pagingItems = airingTodaySeries,
+                        modifier = modifier,
+                        homeViewModel = homeViewModel,
+                        navController = navController,
+                        bottomBarNavController = bottomBarNavController,
+                    )
+                }
+            }
+            val recommendedMedia = if(homeViewModel.selectedOption.value == MOVIE_TAB) recommendedMovies else recommendedSeries
             if(recommendedMedia.itemCount != 0){
                 item{
                     ShouldShowMediaHomeScreenSectionOrShimmer(
@@ -192,7 +221,7 @@ fun HomeScreenContent(
                         modifier = modifier,
                         homeViewModel = homeViewModel,
                         navController = navController,
-                        navHostController = bottomBarNavController,
+                        bottomBarNavController = bottomBarNavController,
                     )
                 }
             }

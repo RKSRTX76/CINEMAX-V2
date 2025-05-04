@@ -1,5 +1,6 @@
 package com.rksrtx76.cinemax.presentation.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,7 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.presentation.screens.components.FocusedSearchBar
@@ -39,20 +44,29 @@ import com.rksrtx76.cinemax.presentation.screens.components.SearchItem
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.SearchViewModel
 import com.rksrtx76.cinemax.ui.theme.font
+import com.rksrtx76.cinemax.util.BottomNav
+import com.rksrtx76.cinemax.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     homeViewModel: HomeViewModel,
     searchViewModel: SearchViewModel,
+    selectedItem : MutableState<Int>,
+    navBackStackEntry: NavBackStackEntry,
+    navController: NavController,
+    bottomNavController: NavController,
     paddingValues: PaddingValues,
-    navController: NavController
 ) {
-    val searchQuery by searchViewModel.searchQuery.collectAsState()
-    val searchResultsFlow by searchViewModel.searchResults.collectAsState()
-    val searchResults = searchResultsFlow.collectAsLazyPagingItems()
+    val searchQuery = searchViewModel.searchQuery.value
+    val searchResults = searchViewModel.searchResult.value.collectAsLazyPagingItems()
 
     val listState = rememberLazyGridState()
+
+    BackHandler(enabled = true) {
+        selectedItem.value = 0
+        bottomNavController.navigate(BottomNav.MEDIA_MAIN_SCREEN)
+    }
 
 
     Column(
@@ -85,7 +99,6 @@ fun SearchScreen(
                             media?.let {
                                 SearchItem(
                                     media = media,
-                                    category = "search",
                                     navController = navController
                                 )
                             }
@@ -117,7 +130,7 @@ fun SearchScreen(
                 }
             }
         }else{
-            val trendingMedia = homeViewModel.trendingMedia.value.collectAsLazyPagingItems()
+            val trendingMedia = homeViewModel.trendingMovies.value.collectAsLazyPagingItems()
             LazyColumn {
                 items(
                     count = minOf(trendingMedia.itemCount, 5) // Top 5 only
@@ -129,12 +142,12 @@ fun SearchScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 32.dp, vertical = 6.dp)
                                 .clickable {
-                                    searchViewModel.onSearchQueryChanged(media.title!!)
+                                    searchViewModel.updateSearchQuery(media.title)
                                 },
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             Text(
-                                text = media.title!!,
+                                text = media.title,
                                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                                 fontFamily = font,
                                 fontWeight = FontWeight.Bold,

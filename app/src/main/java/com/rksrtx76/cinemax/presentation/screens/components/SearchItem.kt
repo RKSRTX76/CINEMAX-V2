@@ -43,7 +43,6 @@ import com.rksrtx76.cinemax.util.Screen
 @Composable
 fun SearchItem(
     media: Search,
-    category: String,
     navController: NavController
 ) {
     val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.posterPath}"
@@ -62,7 +61,7 @@ fun SearchItem(
             .clip(RoundedCornerShape(12.dp))
             .clickable {
                 navController.navigate(
-                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=${media.mediaType}&category=$category"
+                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=${media.mediaType}"
                 )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)

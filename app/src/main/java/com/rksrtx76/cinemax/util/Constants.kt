@@ -6,7 +6,8 @@ object Constants{
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
     const val BACKDROP_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w780/"
-    val api_key = BuildConfig.API_KEY
+    const val API_KEY = BuildConfig.API_KEY
+    const val STARTING_PAGE = 0
 
 
     const val POPULAR = "popular"
@@ -22,8 +23,8 @@ object Constants{
     const val RECOMMENDED = "recommended"
 
 
-    const val MOVIE_TAB = "Movies"
-    const val TV_SHOW_TAB = "Series"
+    const val MOVIE_TAB = "movie"
+    const val TV_SHOW_TAB = "tv"
 
 
 }

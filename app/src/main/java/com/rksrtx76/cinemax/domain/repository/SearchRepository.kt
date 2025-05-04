@@ -5,5 +5,5 @@ import com.rksrtx76.CINEMAX.model.Search
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    fun multiSearch(searchParams : String, includeAdult : Boolean) : Flow<PagingData<Search>>
+    fun multiSearch(query : String) : Flow<PagingData<Search>>
 }
