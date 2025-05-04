@@ -99,7 +99,7 @@ fun VideoSection(
                 Icon(
                     imageVector = Icons.Rounded.ArrowBackIos,
                     contentDescription = null,
-                    tint = Color.Black,
+                    tint = Color.White.copy(alpha = 0.75f),
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -114,12 +114,14 @@ fun VideoSection(
                     .clip(RoundedCornerShape(50.dp))
                     .size(45.dp)
                     .alpha(0.65f)
-                    .background(Color.Black.copy(alpha = 0.65f))
+                    .background(Color.Black.copy(alpha = 0.65f)),
+                contentAlignment = Alignment.Center
+
             ){
                 Icon(
                     imageVector = Icons.Rounded.PlayArrow,
                     contentDescription = stringResource(R.string.watch_trailer),
-                    tint = Color.Black,
+                    tint = Color.White,
                     modifier = Modifier.size(35.dp)
                 )
             }
