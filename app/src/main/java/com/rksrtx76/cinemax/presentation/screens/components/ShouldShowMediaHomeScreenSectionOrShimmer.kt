@@ -1,20 +1,12 @@
 package com.rksrtx76.cinemax.presentation.screens.components
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
-import com.rksrtx76. CINEMAX.model.Media
-import com.rksrtx76.cinemax.R
+import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
-import com.rksrtx76.cinemax.util.Constants
 import timber.log.Timber
 
 @Composable

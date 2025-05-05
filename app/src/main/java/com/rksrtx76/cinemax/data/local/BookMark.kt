@@ -12,5 +12,4 @@ data class BookMark(
     val releaseDate : String,
     val description : String,
     val rating : String,
-//    val addedOn : String
 )

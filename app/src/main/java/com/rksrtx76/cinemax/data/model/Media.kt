@@ -1,10 +1,7 @@
 package com.rksrtx76.CINEMAX.model
 
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.rksrtx76.cinemax.data.model.Video
-import kotlinx.parcelize.Parcelize
 
 
 data class Media(

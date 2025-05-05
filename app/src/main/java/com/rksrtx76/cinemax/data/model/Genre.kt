@@ -1,6 +1,5 @@
 package com.rksrtx76.CINEMAX.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 

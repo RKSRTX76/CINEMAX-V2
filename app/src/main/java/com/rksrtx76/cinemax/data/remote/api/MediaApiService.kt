@@ -6,7 +6,6 @@ import com.rksrtx76.cinemax.data.remote.dto.CastResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.GenreResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.MediaResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.MultiSearchResponseDto
-import com.rksrtx76.cinemax.data.remote.dto.ReviewResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.VideosDto
 import com.rksrtx76.cinemax.util.Constants.API_KEY
 import com.rksrtx76.cinemax.util.Constants.STARTING_PAGE

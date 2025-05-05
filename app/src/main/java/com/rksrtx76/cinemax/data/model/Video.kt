@@ -1,8 +1,6 @@
 package com.rksrtx76.cinemax.data.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 data class Video(
     @SerializedName("key")
