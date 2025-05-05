@@ -90,6 +90,9 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+    // Lottie
+    implementation(libs.lottie.compose)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

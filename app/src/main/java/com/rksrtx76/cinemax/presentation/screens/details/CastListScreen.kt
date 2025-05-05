@@ -31,8 +31,7 @@ import com.rksrtx76.cinemax.ui.theme.font
 @Composable
 fun CastListScreen(
     detailsViewModel: DetailsViewModel,
-    type : String,
-    paddingValues: PaddingValues
+    type : String
 ) {
     val title = stringResource(R.string.all_cast)
     val castList = detailsViewModel.castDetails.value
@@ -51,7 +50,7 @@ fun CastListScreen(
             LazyVerticalGrid(
                 modifier = Modifier
                     .statusBarsPadding()
-                    .padding(bottom = paddingValues.calculateBottomPadding()),
+                    .padding(bottom = 56.dp),
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(top = SmallRadius.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),

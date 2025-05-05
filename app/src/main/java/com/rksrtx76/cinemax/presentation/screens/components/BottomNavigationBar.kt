@@ -34,7 +34,7 @@ fun BottomNavigationBar(
                 onClick = {
                     selectedItem.value = idx
                     when(selectedItem.value){
-                        0 -> bottomNavController.navigate(BottomNav.MEDIA_MAIN_SCREEN)
+                        0 -> bottomNavController.navigate(BottomNav.HOME_SCREEN)
                         1 -> bottomNavController.navigate(BottomNav.SEARCH_SCREEN)
                         2 -> bottomNavController.navigate(BottomNav.BOOKMARK_SCREEN)
                         3 -> bottomNavController.navigate(BottomNav.PROFILE_SCREEN)

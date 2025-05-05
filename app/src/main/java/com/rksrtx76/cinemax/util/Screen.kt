@@ -1,6 +1,6 @@
 package com.rksrtx76.cinemax.util
 
-object Screen {
+object  Screen {
     const val SEARCH_SCREEN = "search_screen"
     const val MAIN_SCREEN = "main_screen"
     const val HOME_SCREEN = "home_screen"

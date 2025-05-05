@@ -63,7 +63,7 @@ fun SearchScreen(
 
     BackHandler(enabled = true) {
         selectedItem.value = 0
-        navController.navigate(BottomNav.MEDIA_MAIN_SCREEN)
+        navController.navigate(BottomNav.HOME_SCREEN)
     }
 
 

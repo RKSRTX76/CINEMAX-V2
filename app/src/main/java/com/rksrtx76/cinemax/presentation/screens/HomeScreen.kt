@@ -17,8 +17,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,28 +26,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.screens.components.TabScreen
 import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants.MOVIE_TAB
 import com.rksrtx76.cinemax.util.Constants.TV_SHOW_TAB
-import com.rksrtx76.cinemax.util.MediaType
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier : Modifier = Modifier,
     paddingValues : PaddingValues,
-    bottomBarNavController : NavHostController,
+    navController : NavController ,
+    bottomBarNavController : NavController,
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var tabPage by rememberSaveable { mutableIntStateOf(0) } // 0 for Movie, 1 for TV
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val bookMarkViewModel = hiltViewModel<BookMarkViewModel>()
-    val navController = rememberNavController()
+    val detailsViewModel = hiltViewModel<DetailsViewModel>()
 
 
     // Default TopAppBar with title
@@ -78,20 +75,22 @@ fun HomeScreen(
         TabScreen(
             homeViewModel = homeViewModel,
             tabPage = tabPage,
-            onTabSelected = { selectedTab->
+            onTabSelected = { selectedTab ->
                 tabPage = selectedTab
-                homeViewModel.setSelectedOption(if(selectedTab == 0) MOVIE_TAB else TV_SHOW_TAB)
+                homeViewModel.setSelectedOption(if (selectedTab == 0) MOVIE_TAB else TV_SHOW_TAB)
             },
         )
-        // Trigger Home Navigation Controller
-        HomeNavigation(
+
+        HomeScreenContent(
             modifier = modifier,
-            paddingValues = paddingValues,
             navController = navController,
+            paddingValues = paddingValues,
             bottomBarNavController = bottomBarNavController,
             scrollBehavior = scrollBehavior,
             homeViewModel = homeViewModel,
+            detailsViewModel = detailsViewModel,
             bookMarkViewModel = bookMarkViewModel
         )
+
     }
 }

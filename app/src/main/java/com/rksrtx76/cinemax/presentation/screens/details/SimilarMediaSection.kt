@@ -40,7 +40,6 @@ fun SimilarMediaSection(
     homeViewModel: HomeViewModel,
     media: MediaDetails,
     type : String,
-    paddingValues: PaddingValues
 ){
     val title = stringResource(R.string.similar)
     val mediaList = if(type == "movie") homeViewModel.similarMovies else homeViewModel.similarSeries
@@ -48,7 +47,7 @@ fun SimilarMediaSection(
 
     if(mediaItems.itemCount != 0){
         Column(
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+            modifier = Modifier.padding(bottom = 56.dp)
         ) {
             Row(
                 modifier = Modifier

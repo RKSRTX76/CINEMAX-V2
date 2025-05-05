@@ -74,7 +74,7 @@ fun MediaHomeScreenSection(
                     Item(
                         media = media,
                         type = homeViewModel.selectedOption.value,
-                        navController = bottomNavController,
+                        navController = navController,
                         homeViewModel = homeViewModel,
                         detailsViewModel = detailsViewModel,
                         modifier = Modifier

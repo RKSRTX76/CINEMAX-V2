@@ -53,7 +53,6 @@ fun DetailScreen(
     navController: NavController,
     detailsViewModel: DetailsViewModel,
     homeViewModel: HomeViewModel,
-    paddingValues: PaddingValues
 ) {
 
     val mediaDetails = if(mediaType == "movie") detailsViewModel.movieDetails.value else detailsViewModel.seriesDetails.value
@@ -99,12 +98,10 @@ fun DetailScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
-//                    verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-//                            .padding(horizontal = 8.dp) // check
                                 .wrapContentHeight()
                         ){
                             VideoSection(
@@ -172,7 +169,6 @@ fun DetailScreen(
                             homeViewModel = homeViewModel,
                             media = mediaDetails.data,
                             type = mediaType,
-                            paddingValues = paddingValues
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))

@@ -11,7 +11,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,10 +35,8 @@ import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.Radius
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
-import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Screen
 import timber.log.Timber
-import kotlin.text.category
 
 @Composable
 fun Item(
