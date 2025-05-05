@@ -39,6 +39,7 @@ import com.rksrtx76.cinemax.util.Constants.TOP_RATED
 import com.rksrtx76.cinemax.util.Constants.TRENDING
 import com.rksrtx76.cinemax.util.Constants.TV_SHOW_TAB
 import com.rksrtx76.cinemax.util.Constants.UPCOMING
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +53,7 @@ fun HomeScreenContent(
     detailsViewModel: DetailsViewModel,
     bookMarkViewModel: BookMarkViewModel
 ){
+
 
     val listState = rememberLazyListState()
 
@@ -67,8 +69,7 @@ fun HomeScreenContent(
     val nowPlayingMovies = homeViewModel.nowPlayingMovies.value.collectAsLazyPagingItems()
     val upcomingMovies = homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()
     val airingTodaySeries = homeViewModel.airingTodaySeries.value.collectAsLazyPagingItems()
-    val similarMovies = homeViewModel.similarMovies.value.collectAsLazyPagingItems()
-    val similarSeries = homeViewModel.similarSeries.value.collectAsLazyPagingItems()
+
 
 
     val context = LocalContext.current
@@ -77,7 +78,7 @@ fun HomeScreenContent(
     }
 
     // at launch setup recommended movies based on bookmark list
-    LaunchedEffect(bookmarkedList) {
+    LaunchedEffect(Unit) {
         // filter by type
         val filteredMedia = bookmarkedList.value.filter {
             it.mediaType == homeViewModel.selectedOption.value
@@ -220,6 +221,7 @@ fun HomeScreenContent(
                 }
             }
             val recommendedMedia = if(homeViewModel.selectedOption.value == MOVIE_TAB) recommendedMovies else recommendedSeries
+
             if(recommendedMedia.itemCount != 0){
                 item{
                     ShouldShowMediaHomeScreenSectionOrShimmer(

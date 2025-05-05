@@ -26,7 +26,6 @@ import com.rksrtx76.cinemax.ui.theme.font
 
 @Composable
 fun ListShimmerEffect(
-    title: String,
     radius: Int
 ) {
     LazyVerticalGrid(

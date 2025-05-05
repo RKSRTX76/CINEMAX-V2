@@ -11,6 +11,6 @@ data class BookMark(
     val mediaType : String,
     val releaseDate : String,
     val description : String,
-    val rating : Double,
-    val addedOn : String
+    val rating : String,
+//    val addedOn : String
 )

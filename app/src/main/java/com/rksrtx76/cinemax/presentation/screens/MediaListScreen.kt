@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -22,33 +24,41 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
-import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
-import com.rksrtx76.cinemax.presentation.screens.components.ListShimmerEffect
-import com.rksrtx76.cinemax.presentation.screens.components.MediaItem
-import com.rksrtx76.cinemax.ui.theme.BigRadius
+import com.rksrtx76.cinemax.presentation.screens.details.BookMarkMediaItem
+import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
+import com.rksrtx76.cinemax.ui.theme.font
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaListScreen(
-    type: String,  // movie or tv
-    category : String,   // popular, top_rated, trending, etc   (title for the screen)
-    mediaItems: LazyPagingItems<Media>,
+//    type: String,  // movie or tv
+//    mediaItems: LazyPagingItems<Media>,
     navController: NavController,
-    navBackStackEntry: NavBackStackEntry,  // helps go go back to the previous screen
-    modifier : Modifier = Modifier
+    bookMarkViewModel: BookMarkViewModel,
+    modifier : Modifier = Modifier,
+    paddingValues: PaddingValues
 ) {
+    val bookmarkList = bookMarkViewModel.bookMarkList.value.collectAsState(initial = emptyList())
+    val currList by remember { mutableStateOf(bookmarkList) }
+
     BackHandler(
         enabled = true
     ) {
@@ -82,22 +92,39 @@ fun MediaListScreen(
             )
 
         }
-    ) { paddingValues ->
+    ) { padding ->
         Box(
             modifier = modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
-                .padding(top = paddingValues.calculateTopPadding())
                 .background(MaterialTheme.colorScheme.surface)
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
         ){
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-//            Offline
-            if(mediaItems.itemCount == 0){
-                ListShimmerEffect(
-                    title = category,
-                    radius = BigRadius
-                )
+
+            if(currList.value.isEmpty()){
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 70.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.watchlist),
+                        contentDescription = "Bookmarks",
+                        tint = Color.Gray.copy(alpha = 0.45f),
+                        modifier = Modifier.size(190.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Add movies or shows to your watchlist\nto easily find them later.",
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        fontSize = 18.sp,
+                        fontFamily = font
+                    )
+                }
             }
             else{
                 val listState = rememberLazyGridState()
@@ -107,16 +134,16 @@ fun MediaListScreen(
                 ) {
                     LazyVerticalGrid(
                         state = listState,
-                        contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
+//                        .padding(top = paddingValues.calculateTopPadding(), bottom = paddingValues.calculateBottomPadding())
+                        contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = padding.calculateTopPadding(), bottom = paddingValues.calculateBottomPadding()),
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         columns = GridCells.Fixed(3)
                     ) {
-                        items(mediaItems.itemCount){ idx->
-                            mediaItems[idx]?.let {
-                                MediaItem(
-                                    media = mediaItems[idx]!!,
-                                    category = category,
+                        items(currList.value.size){ idx->
+                            currList.value[idx]?.let {
+                                BookMarkMediaItem(
+                                    media = currList.value[idx],
                                     navController = navController,
                                 )
                             }

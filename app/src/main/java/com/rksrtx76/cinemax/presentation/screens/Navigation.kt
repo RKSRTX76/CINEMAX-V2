@@ -34,7 +34,7 @@ fun Navigation(
     val searchViewModel = hiltViewModel<SearchViewModel>()
     val lifecycleOwner = LocalLifecycleOwner.current
     val detailsViewModel = hiltViewModel<DetailsViewModel>()
-//    val navController = rememberNavController()
+    val bookMarkViewModel = hiltViewModel<BookMarkViewModel>()
     NavHost(
         navController = bottomNavController,
         startDestination = BottomNav.MEDIA_MAIN_SCREEN
@@ -108,7 +108,11 @@ fun Navigation(
         }
 
         composable(BottomNav.BOOKMARK_SCREEN){
-//            BookMarkScreen()
+            MediaListScreen(
+                navController = bottomNavController,
+                bookMarkViewModel = bookMarkViewModel,
+                paddingValues = paddingValues
+            )
         }
         composable(BottomNav.PROFILE_SCREEN){
 //            ProfileScreen()

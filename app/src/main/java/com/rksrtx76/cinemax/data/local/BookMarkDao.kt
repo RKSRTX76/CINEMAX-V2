@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BookMarkDao {
 
-    @Query("SELECT * FROM bookmark_list ORDER BY addedOn DESC")
+    @Query("SELECT * FROM bookmark_list ORDER BY mediaid DESC")
     fun getBookMarkList() : Flow<List<BookMark>>
 
     @Query("SELECT * FROM bookmark_list WHERE mediaId =:mediaId")

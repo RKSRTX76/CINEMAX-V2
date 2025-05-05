@@ -37,6 +37,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.util.Constants.BACKDROP_IMAGE_BASE_URL
@@ -56,13 +57,15 @@ fun DetailScreen(
 ) {
 
     val mediaDetails = if(mediaType == "movie") detailsViewModel.movieDetails.value else detailsViewModel.seriesDetails.value
-
-
-    // bookmark function implement later
+    val bookMarkViewModel = hiltViewModel<BookMarkViewModel>()
 
 
     val surface = MaterialTheme.colorScheme.surface
     var averageColor by remember { mutableStateOf(surface) }
+
+    LaunchedEffect(Unit) {
+        bookMarkViewModel.ifExists(mediaId)
+    }
 
 
     Box(
@@ -133,10 +136,11 @@ fun DetailScreen(
 
                                 Spacer(modifier = Modifier.width(12.dp))
 
-
                                 InfoSection(
                                     media = mediaDetails.data,
-                                    type = mediaType
+                                    mediaId = mediaId,
+                                    type = mediaType,
+                                    bookMarkViewModel = bookMarkViewModel
                                 )
 
                                 Spacer(modifier = Modifier.width(8.dp))

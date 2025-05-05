@@ -1,4 +1,4 @@
-package com.rksrtx76.cinemax.presentation.screens.components
+package com.rksrtx76.cinemax.presentation.screens.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,16 +35,17 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.rksrtx76.CINEMAX.model.Media
 import com.rksrtx76.cinemax.R
+import com.rksrtx76.cinemax.data.local.BookMark
 import com.rksrtx76.cinemax.ui.theme.font
 import com.rksrtx76.cinemax.util.Constants.POSTER_IMAGE_BASE_URL
 import com.rksrtx76.cinemax.util.Screen
 
 @Composable
-fun MediaItem(
-    media: Media,
+fun BookMarkMediaItem(
+    media: BookMark,
     navController: NavController
 ) {
-    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.poster_path}"
+    val imageUrl = "$POSTER_IMAGE_BASE_URL/${media.imagePath}"
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
@@ -59,9 +60,9 @@ fun MediaItem(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .clickable {
-//                navController.navigate(
-//                    "${Screen.DETAILS_SCREEN}?id=${media.id}&type=${media.mediaType}&category=$category"
-//                )
+                navController.navigate(
+                    "${Screen.DETAILS_SCREEN}?id=${media.mediaId}&type=${media.mediaType}"
+                )
             }
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .fillMaxWidth()
@@ -98,7 +99,7 @@ fun MediaItem(
         }
 
         // Rating badge
-        val vote = media.vote_average.toString()
+        val vote = media.rating
         val firstDigit = vote.first().digitToIntOrNull() ?: 0
 
         val starColor = when(firstDigit){

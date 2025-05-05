@@ -45,7 +45,6 @@ fun CastListScreen(
     ) {
         if (castList.data?.casts?.isEmpty() == true) {
             ListShimmerEffect(
-                title = title,
                 radius = SmallRadius
             )
         } else {

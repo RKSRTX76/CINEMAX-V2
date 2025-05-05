@@ -93,8 +93,8 @@ fun SimilarMediaSection(
                         homeViewModel = homeViewModel,
                         detailsViewModel = detailsViewModel,
                         modifier = Modifier
-                            .height(200.dp)
-                            .width(150.dp)
+                            .height(210.dp)
+                            .width(135.dp)
                         )
                     }
                 }

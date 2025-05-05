@@ -74,15 +74,6 @@ fun Item(
         modifier = modifier
             .clip(RoundedCornerShape(Radius.dp))
             .clickable {
-//                if(type == "movie") {
-//                    detailsViewModel.getMovieDetails(media.id)
-//                    detailsViewModel.getMovieCastDetails(media.id)
-//                    homeViewModel.getSimilarMovies(media.id)
-//                } else {
-//                    detailsViewModel.getSeriesDetails(media.id)
-//                    detailsViewModel.getSeriesCastDetails(media.id)
-//                    homeViewModel.getSimilarSeries(media.id)
-//                }
                 navController.navigate(
                     "${Screen.DETAILS_SCREEN}?id=${media.id}&type=$type"
                 )

@@ -7,6 +7,9 @@ import com.rksrtx76.cinemax.data.local.BookMark
 import com.rksrtx76.cinemax.domain.repository.BookMarkListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,8 +22,8 @@ class BookMarkViewModel @Inject constructor(
     private val _bookmarkList = mutableStateOf<Flow<List<BookMark>>>(emptyFlow())
     val bookMarkList = _bookmarkList
 
-    private val _insertToBookmark = mutableStateOf(0)
-    val insertToBookmark = _insertToBookmark
+    private val _insertToBookmark = MutableStateFlow(0)
+    val insertToBookmark : StateFlow<Int> = _insertToBookmark.asStateFlow()
 
 
     init {
@@ -45,9 +48,19 @@ class BookMarkViewModel @Inject constructor(
         }
     }
 
+    fun removeABookmark(mediaId : Int){
+        viewModelScope.launch {
+            bookMarkListRepository.removeFromBookMarkList(mediaId)
+        }.invokeOnCompletion {
+            ifExists(mediaId)
+        }
+    }
+
     fun ifExists(mediaId : Int){
         viewModelScope.launch {
-            _insertToBookmark.value = bookMarkListRepository.exists(mediaId)
+//            _insertToBookmark.value = bookMarkListRepository.exists(mediaId)
+            val exists = bookMarkListRepository.exists(mediaId)
+            _insertToBookmark.emit(exists)
         }
     }
 }
