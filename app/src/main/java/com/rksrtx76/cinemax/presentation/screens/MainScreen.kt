@@ -59,7 +59,8 @@ fun MainScreen(
             composable(BottomNav.SEARCH_SCREEN){
                 SearchScreen(
                     selectedItem = selectedItem,
-                    navController = navController, // important: use root for detail nav
+                    navController = navController, // important: use root for detail nav,
+                    bottNavController = bottomNavController,
                     searchViewModel = searchViewModel,
                     homeViewModel = homeViewModel,
                     paddingValues = paddingValues

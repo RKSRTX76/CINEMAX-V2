@@ -26,17 +26,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.presentation.screens.components.FocusedSearchBar
@@ -54,6 +49,7 @@ fun SearchScreen(
     searchViewModel: SearchViewModel,
     selectedItem : MutableState<Int>,
     navController: NavController,
+    bottNavController: NavController,
     paddingValues: PaddingValues,
 ) {
     val searchQuery = searchViewModel.searchQuery.value
@@ -63,7 +59,7 @@ fun SearchScreen(
 
     BackHandler(enabled = true) {
         selectedItem.value = 0
-        navController.navigate(BottomNav.HOME_SCREEN)
+        bottNavController.navigate(BottomNav.HOME_SCREEN)
     }
 
 
