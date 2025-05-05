@@ -57,9 +57,9 @@ fun PosterSection(
     Timber.d("Poster Section- overview, ${media?.overview}")
     Timber.d("Poster Section poster state, $posterState")
 
-    val posterWidth by animateDpAsState(targetValue = if (isVideoPlaying) 145.dp else 175.dp, animationSpec = tween(durationMillis = 300))
-    val posterHeight by animateDpAsState(targetValue = if (isVideoPlaying) 200.dp else 245.dp, animationSpec = tween(durationMillis = 300))
-    val spacerHeight by animateDpAsState(targetValue = if (isVideoPlaying) 245.dp else 190.dp, animationSpec = tween(durationMillis = 300))
+    val posterWidth by animateDpAsState(targetValue = if (isVideoPlaying) 145.dp else 172.dp, animationSpec = tween(durationMillis = 300))
+    val posterHeight by animateDpAsState(targetValue = if (isVideoPlaying) 200.dp else 240.dp, animationSpec = tween(durationMillis = 300))
+    val spacerHeight by animateDpAsState(targetValue = if (isVideoPlaying) 252.dp else 185.dp, animationSpec = tween(durationMillis = 300))
     val cardElevation by animateFloatAsState(targetValue = if (isVideoPlaying) 8f else 5f, animationSpec = tween(durationMillis = 300))
 
     Column {

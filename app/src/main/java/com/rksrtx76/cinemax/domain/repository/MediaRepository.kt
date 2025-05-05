@@ -7,7 +7,6 @@ import com.rksrtx76.cinemax.data.model.MediaDetails
 import com.rksrtx76.cinemax.data.remote.dto.CastResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.GenreResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.MultiSearchResponseDto
-import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 import kotlinx.coroutines.flow.Flow
 

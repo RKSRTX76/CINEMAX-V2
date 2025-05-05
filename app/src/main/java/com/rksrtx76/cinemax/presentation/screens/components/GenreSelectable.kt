@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.ThemeViewModel
 import com.rksrtx76.cinemax.ui.theme.Radius
 import com.rksrtx76.cinemax.ui.theme.font
 
@@ -35,11 +38,12 @@ fun GenreSelectable(
     selected : Boolean,
     onClick : () -> Unit
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
+    val themeViewModel = hiltViewModel<ThemeViewModel>()
+    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState()
 
     val animateBackColor by animateColorAsState(
         targetValue =
-            if(isDarkTheme){
+            if(isDarkTheme.value){
                 if(selected) Color.White else Color(0xFF5E5E5E)
             }else{
                 if(selected) Color.Black else Color.Black.copy(alpha = 0.10f)
@@ -69,7 +73,7 @@ fun GenreSelectable(
             fontWeight = if(selected) FontWeight.Normal else FontWeight.Light,
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
-            color = if(isDarkTheme){
+            color = if(isDarkTheme.value){
                 if(selected) Color.Black else Color.White.copy(alpha = 0.80f)
             }
             else{

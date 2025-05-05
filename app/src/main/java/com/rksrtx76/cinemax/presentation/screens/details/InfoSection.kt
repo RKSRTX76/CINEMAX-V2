@@ -49,7 +49,7 @@ fun InfoSection(
 
 
     Column {
-        Spacer(Modifier.height(235.dp))
+        Spacer(Modifier.height(240.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,

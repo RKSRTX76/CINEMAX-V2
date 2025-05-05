@@ -29,7 +29,7 @@ fun WatchVideoScreen(
             .fillMaxSize()
             .background(Color.Black)
             .statusBarsPadding()
-            .padding(top = 8.dp),
+            .padding(top = 26.dp),
         contentAlignment = Alignment.Center
     ) {
         AndroidView(factory = { context ->

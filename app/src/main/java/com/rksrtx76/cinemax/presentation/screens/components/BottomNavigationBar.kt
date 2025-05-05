@@ -10,10 +10,13 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.rksrtx76.cinemax.presentation.viewmodel.ThemeViewModel
 import com.rksrtx76.cinemax.ui.theme.font
 import com.rksrtx76.cinemax.util.BottomNav
 import com.rksrtx76.cinemax.util.items
@@ -23,7 +26,8 @@ fun BottomNavigationBar(
     selectedItem : MutableState<Int>,
     bottomNavController: NavController
 ){
-    val isDarkTheme = isSystemInDarkTheme()
+    val themeViewModel = hiltViewModel<ThemeViewModel>()
+    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState()
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground
@@ -55,7 +59,7 @@ fun BottomNavigationBar(
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = if(isDarkTheme) Color.White else Color.Black,
+                    selectedIconColor = if(isDarkTheme.value) Color.White else Color.Black,
                     indicatorColor = Color.Transparent
                 )
             )

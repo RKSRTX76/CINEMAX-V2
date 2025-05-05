@@ -20,7 +20,6 @@ import com.rksrtx76.cinemax.paging.TopRatedSeriesSource
 import com.rksrtx76.cinemax.paging.TrendingMovieSource
 import com.rksrtx76.cinemax.paging.TrendingSeriesSource
 import com.rksrtx76.cinemax.paging.UpcomingMoviesSource
-import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException

@@ -10,7 +10,6 @@ import com.rksrtx76.cinemax.data.remote.dto.CastResponseDto
 import com.rksrtx76.cinemax.data.remote.dto.VideosDto
 import com.rksrtx76.cinemax.domain.repository.SearchRepository
 import com.rksrtx76.cinemax.domain.repository.VideoRepository
-import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -30,7 +30,6 @@ import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.ui.theme.font
-import com.rksrtx76.cinemax.util.MediaType
 import com.rksrtx76.cinemax.util.Screen
 import timber.log.Timber
 

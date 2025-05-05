@@ -15,6 +15,7 @@ import com.rksrtx76.cinemax.presentation.viewmodel.BookMarkViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.DetailsViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.HomeViewModel
 import com.rksrtx76.cinemax.presentation.viewmodel.SearchViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.ThemeViewModel
 import com.rksrtx76.cinemax.util.Screen
 import timber.log.Timber
 
@@ -22,6 +23,8 @@ import timber.log.Timber
 @Composable
 fun Navigation(
     navController : NavHostController,
+    isDarkTheme : Boolean,
+    themeViewModel: ThemeViewModel
 ){
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val searchViewModel = hiltViewModel<SearchViewModel>()
@@ -43,7 +46,9 @@ fun Navigation(
                 searchViewModel = searchViewModel,
                 bookMarkViewModel = bookMarkViewModel,
                 detailsViewModel = detailsViewModel,
-                navController = navController
+                navController = navController,
+                isDarkTheme = isDarkTheme,
+                themeViewModel = themeViewModel
             )
         }
 

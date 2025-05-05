@@ -92,6 +92,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     // Lottie
     implementation(libs.lottie.compose)
+    // compose animation
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
 
 
     implementation(libs.androidx.core.ktx)

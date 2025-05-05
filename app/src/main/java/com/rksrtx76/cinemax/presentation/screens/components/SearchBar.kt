@@ -49,9 +49,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.rksrtx76.cinemax.R
 import com.rksrtx76.cinemax.presentation.viewmodel.SearchViewModel
+import com.rksrtx76.cinemax.presentation.viewmodel.ThemeViewModel
 import com.rksrtx76.cinemax.ui.theme.BigRadius
 import com.rksrtx76.cinemax.ui.theme.font
 
@@ -61,7 +63,8 @@ fun FocusedSearchBar(
     searchViewModel: SearchViewModel
 ){
 
-    val isDarkTheme = isSystemInDarkTheme()
+    val themeViewModel = hiltViewModel<ThemeViewModel>()
+    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState()
 
     Box(
         modifier = Modifier
@@ -77,7 +80,7 @@ fun FocusedSearchBar(
                 Icon(
                     imageVector = Icons.Rounded.Search,
                     contentDescription = null,
-                    tint = if(isDarkTheme) MaterialTheme.colorScheme.onBackground else Color.Black.copy(alpha = 0.10f),
+                    tint = if(isDarkTheme.value) MaterialTheme.colorScheme.onBackground else Color.Black.copy(alpha = 0.10f),
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             },
@@ -86,7 +89,7 @@ fun FocusedSearchBar(
                 searchViewModel.updateSearchQuery(newQuery)
             },
             searchViewModel = searchViewModel,
-            isDarkTheme = isDarkTheme,
+            isDarkTheme = isDarkTheme.value,
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .height(50.dp)
