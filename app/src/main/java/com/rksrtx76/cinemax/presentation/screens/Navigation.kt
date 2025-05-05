@@ -40,6 +40,9 @@ fun Navigation(
         startDestination = BottomNav.MEDIA_MAIN_SCREEN
     ){
         composable(BottomNav.MEDIA_MAIN_SCREEN){
+            LaunchedEffect(Unit) {
+                bookMarkViewModel.getBookmarkList()
+            }
             HomeScreen(
                 bottomBarNavController = bottomNavController,
                 paddingValues = paddingValues

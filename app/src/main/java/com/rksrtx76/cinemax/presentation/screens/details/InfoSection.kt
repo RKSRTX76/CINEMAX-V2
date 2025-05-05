@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rksrtx76.cinemax.data.local.BookMark
@@ -48,7 +49,7 @@ fun InfoSection(
 
 
     Column {
-        Spacer(Modifier.height(240.dp))
+        Spacer(Modifier.height(235.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -67,7 +68,6 @@ fun InfoSection(
                 fontFamily = font,
                 fontSize = 13.sp
             )
-
 
             val context = LocalContext.current
             IconButton(
@@ -101,7 +101,7 @@ fun InfoSection(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(
             text = media.title ?: "",
@@ -164,6 +164,8 @@ fun InfoSection(
             fontFamily = font,
             fontSize = 13.sp,
             lineHeight = 16.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colorScheme.onSurface,
         )
 

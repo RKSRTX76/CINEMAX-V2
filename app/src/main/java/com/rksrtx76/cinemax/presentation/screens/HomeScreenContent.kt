@@ -39,6 +39,7 @@ import com.rksrtx76.cinemax.util.Constants.TOP_RATED
 import com.rksrtx76.cinemax.util.Constants.TRENDING
 import com.rksrtx76.cinemax.util.Constants.TV_SHOW_TAB
 import com.rksrtx76.cinemax.util.Constants.UPCOMING
+import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,38 +71,32 @@ fun HomeScreenContent(
     val upcomingMovies = homeViewModel.upcomingMovies.value.collectAsLazyPagingItems()
     val airingTodaySeries = homeViewModel.airingTodaySeries.value.collectAsLazyPagingItems()
 
+    LaunchedEffect(bookmarkedList.value) {
+        bookMarkViewModel.refreshRandomMediaIds() // optional: force a random pick if empty
+    }
 
+    LaunchedEffect(bookmarkedList.value) {
+        bookMarkViewModel.randomMovieId.collectLatest { movieId ->
+            movieId?.let {
+                Timber.d("Random movie id: $movieId")
+                homeViewModel.getRecommendedMovies(it)
+            }
+        }
+    }
+    LaunchedEffect(bookmarkedList.value) {
+        bookMarkViewModel.randomTvId.collectLatest { tvId ->
+            tvId?.let {
+                Timber.d("Random movie id: $tvId")
+                homeViewModel.getRecommendedSeries(it)
+            }
+        }
+    }
 
     val context = LocalContext.current
     BackHandler(enabled = true) {
         (context as Activity).finish()
     }
 
-    // at launch setup recommended movies based on bookmark list
-    LaunchedEffect(Unit) {
-        // filter by type
-        val filteredMedia = bookmarkedList.value.filter {
-            it.mediaType == homeViewModel.selectedOption.value
-        }
-        if(filteredMedia.isNotEmpty()){
-            // pick a random media id from bookmark list
-            val randomBookmark = filteredMedia.random()
-            val randomBookMarkId = randomBookmark.mediaId
-
-            when(randomBookmark.mediaType){
-                "movie" ->{
-                    if(recommendedMovies.itemCount == 0 && recommendedMovies.loadState.refresh != LoadState.Loading){
-                        homeViewModel.getRecommendedMovies(randomBookMarkId)
-                    }
-                }
-                "tv" ->{
-                    if(recommendedSeries.itemCount == 0 && recommendedSeries.loadState.refresh != LoadState.Loading){
-                        homeViewModel.getRecommendedSeries(randomBookMarkId)
-                    }
-                }
-            }
-        }
-    }
     Box(
         modifier = modifier.padding(bottom = paddingValues.calculateBottomPadding(), top = 8.dp)
     ){
