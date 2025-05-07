@@ -53,7 +53,7 @@ fun SimilarMediaSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -63,19 +63,7 @@ fun SimilarMediaSection(
                     fontFamily = font,
                     fontSize = 18.sp
                 )
-                Text(
-                    modifier = Modifier
-                        .alpha(0.85f)
-                        .clickable {
-//                            navController.navigate(
-//                                "${Screen.SIMILAR_MEDIA_SCREEN}?title=${media.title}"
-//                            )
-                        },
-                    text = stringResource(R.string.see_all),
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontFamily = font,
-                    fontSize = 14.sp
-                )
+
             }
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),

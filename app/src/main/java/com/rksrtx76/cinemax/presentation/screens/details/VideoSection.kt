@@ -1,5 +1,6 @@
 package com.rksrtx76.cinemax.presentation.screens.details
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -61,6 +62,12 @@ fun VideoSection(
                 if(videoId != null){
                     isPlaying = true
                     onVideoPlay(isPlaying)
+                }else{
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.no_video_available_at_the_moment),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
         contentAlignment = Alignment.Center
@@ -103,10 +110,6 @@ fun VideoSection(
                     modifier = Modifier.size(22.dp)
                 )
             }
-
-            // Bookmark button
-
-
 
             // Play button
             Box(
